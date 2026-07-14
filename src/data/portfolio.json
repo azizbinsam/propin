@@ -1,0 +1,16 @@
+{
+  "totalValue": 125750000,
+  "totalReturn": 12450000,
+  "totalReturnPercent": 11.02,
+  "totalProperties": 3,
+  "totalTokens": 250,
+  "averageReturnPercent": 10.25,
+  "performanceHistory": [
+    { "month": "Jan", "value": 98000000 },
+    { "month": "Feb", "value": 105500000 },
+    { "month": "Mar", "value": 102800000 },
+    { "month": "Apr", "value": 116200000 },
+    { "month": "Mei", "value": 118900000 },
+    { "month": "Jun", "value": 125750000 }
+  ]
+}

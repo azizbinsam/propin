@@ -1,0 +1,74 @@
+[
+  {
+    "id": "apartemen-bsd",
+    "name": "Apartemen BSD",
+    "location": "Tangerang Selatan",
+    "category": "apartemen",
+    "totalAsset": 25000000000,
+    "totalTokens": 1000000,
+    "pricePerToken": 25000,
+    "minInvestment": 250000,
+    "projectedReturnPercent": 10.25,
+    "fundingPercent": 72
+  },
+  {
+    "id": "vila-tanjung-lesung",
+    "name": "Vila Tanjung Lesung",
+    "location": "Banten",
+    "category": "vila",
+    "totalAsset": 8000000000,
+    "totalTokens": 160000,
+    "pricePerToken": 50000,
+    "minInvestment": 500000,
+    "projectedReturnPercent": 9.5,
+    "fundingPercent": 58
+  },
+  {
+    "id": "hotel-jogja-syariah",
+    "name": "Hotel Jogja Syariah",
+    "location": "Yogyakarta",
+    "category": "hotel",
+    "totalAsset": 15000000000,
+    "totalTokens": 500000,
+    "pricePerToken": 30000,
+    "minInvestment": 300000,
+    "projectedReturnPercent": 11.4,
+    "fundingPercent": 84
+  },
+  {
+    "id": "apartemen-kemang",
+    "name": "Apartemen Kemang Village",
+    "location": "Jakarta Selatan",
+    "category": "apartemen",
+    "totalAsset": 40000000000,
+    "totalTokens": 1200000,
+    "pricePerToken": 33000,
+    "minInvestment": 330000,
+    "projectedReturnPercent": 10.8,
+    "fundingPercent": 45
+  },
+  {
+    "id": "vila-puncak-syariah",
+    "name": "Vila Puncak Syariah",
+    "location": "Bogor",
+    "category": "vila",
+    "totalAsset": 6000000000,
+    "totalTokens": 120000,
+    "pricePerToken": 50000,
+    "minInvestment": 500000,
+    "projectedReturnPercent": 9.1,
+    "fundingPercent": 91
+  },
+  {
+    "id": "hotel-malioboro-syariah",
+    "name": "Hotel Malioboro Syariah",
+    "location": "Yogyakarta",
+    "category": "hotel",
+    "totalAsset": 22000000000,
+    "totalTokens": 700000,
+    "pricePerToken": 31000,
+    "minInvestment": 310000,
+    "projectedReturnPercent": 11.0,
+    "fundingPercent": 63
+  }
+]

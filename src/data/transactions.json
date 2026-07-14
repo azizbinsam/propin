@@ -1,0 +1,12 @@
+[
+  {
+    "id": "tx-initial-001",
+    "propertyId": "apartemen-bsd",
+    "propertyName": "Apartemen BSD",
+    "tokenAmount": 20,
+    "nominal": 500000,
+    "txHash": "0x7d3f...97a2",
+    "status": "Executed",
+    "createdAt": "2026-05-12T09:30:00.000Z"
+  }
+]

@@ -1,15 +1,15 @@
 {
-  "monthlyPerformance": [
-    { "month": "Jan", "value": 110000000 },
-    { "month": "Feb", "value": 112500000 },
-    { "month": "Mar", "value": 115000000 },
-    { "month": "Apr", "value": 119000000 },
-    { "month": "Mei", "value": 122000000 },
-    { "month": "Jun", "value": 125750000 }
-  ],
   "metrics": {
     "propertyCount": 3,
     "totalTokens": 250,
     "averageReturn": "10.25%"
-  }
+  },
+  "monthlyPerformance": [
+    { "month": "Jan", "value": 98000000 },
+    { "month": "Feb", "value": 102000000 },
+    { "month": "Mar", "value": 108000000 },
+    { "month": "Apr", "value": 110000000 },
+    { "month": "May", "value": 118000000 },
+    { "month": "Jun", "value": 125750000 }
+  ]
 }

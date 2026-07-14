@@ -1,0 +1,20 @@
+{
+  "address": "0xBF71e29C8B190a36C4D18F5B464F36aD4B7893aC",
+  "balance": 15000000,
+  "tokens": [
+    {
+      "propertyId": "prop-001",
+      "propertyName": "Kost Eksklusif Muslim Kuningan",
+      "tokens": 150,
+      "value": 15000000,
+      "percentage": 0.6
+    },
+    {
+      "propertyId": "prop-002",
+      "propertyName": "Ruko Komersial Halal Plaza",
+      "tokens": 72,
+      "value": 7200000,
+      "percentage": 0.4
+    }
+  ]
+}

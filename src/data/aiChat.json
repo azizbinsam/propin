@@ -1,0 +1,13 @@
+{
+  "greeting": "Assalamu'alaikum! Saya PROPIN Syariah Assistant. Saya siap membantu Anda menganalisis kehalalan aset, menghitung simulasi imbal hasil, atau menjelaskan skema akad di platform ini.",
+  "quickPrompts": [
+    { "label": "📖 Jelaskan Akad Musyarakah", "query": "Bagaimana skema pembagian keuntungan dan risiko pada Akad Musyarakah Mutanaqisah di PROPIN?" },
+    { "label": "⚖️ Status Hukum Token Properti", "query": "Apakah kepemilikan pecahan properti lewat token digital ini sah dan halal menurut MUI?" },
+    { "label": "🤲 Konsultasi Nisab Zakat", "query": "Harta investasi saya saat ini bernilai Rp 150 Juta. Apakah saya sudah wajib mengeluarkan zakat investasi?" }
+  ],
+  "responses": {
+    "akad": "Di PROPIN, kami menggunakan Akad Musyarakah Mutanaqisah, yaitu kerjasama kepemilikan aset antara investor dan pengelola. Keuntungan dibagi sesuai porsi modal, dan risiko ditanggung bersama. Kepemilikan pengelola akan berkurang seiring waktu hingga seluruh aset menjadi milik investor.",
+    "halal": "Tokenisasi di PROPIN bersifat aset-terikat (backed by real asset), bukan mata uang kripto spekulatif. Seluruh transaksi menggunakan akad syariah yang telah disetujui Dewan Syariah. Kami menghindari riba, gharar, dan maysir.",
+    "zakat": "Betul sekali. Batas Nisab zakat mal/investasi setara dengan 85 gram emas (sekitar Rp 123.250.000). Jika total harta Anda mencapai nisab dan telah melewati haul (1 tahun hijriah), maka wajib dikeluarkan zakat sebesar 2,5%."
+  }
+}

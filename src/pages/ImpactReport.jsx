@@ -1,129 +1,69 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Users, Building2, Coins, Briefcase, Leaf, HandHelping, Award } from 'lucide-react';
+import impactData from '../data/impact.json';
 
 export default function ImpactReport() {
-  // Mock data dampak sosial agregat dari portofolio investasi
-  const impactMetrics = [
-    { id: 1, label: "Tenaga Kerja Terserap", value: "142", unit: "Orang", icon: "👷‍♂️", desc: "Pekerja lokal yang diberdayakan dalam proyek konstruksi & pengelolaan." },
-    { id: 2, label: "Fasilitas Umum Dibangun", value: "6", unit: "Unit", icon: "🕌", desc: "Renovasi masjid, pembangunan taman bermain, dan sarana air bersih." },
-    { id: 3, label: "Pemberdayaan UMKM", value: "24", unit: "Mitra", icon: "🏪", desc: "Pelaku usaha lokal yang mendapat ruang usaha terintegrasi di area properti." },
-    { id: 4, label: "Penerima Manfaat Zakat", value: "1,200+", unit: "Jiwa", icon: "🤝", desc: "Masyarakat prasejahtera sekitar proyek yang disalurkan zakat mal." }
+  const { metrics, maqashidScore, sdgs } = impactData;
+
+  const formatRupiah = (value) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, notation: 'compact' }).format(value);
+
+  const metricCards = [
+    { icon: Users, label: 'Investor Aktif', value: metrics.activeInvestors.toLocaleString() },
+    { icon: Building2, label: 'Properti Dibiayai', value: metrics.propertiesFunded },
+    { icon: Coins, label: 'Dana Terkumpul', value: formatRupiah(metrics.totalFunds) },
+    { icon: Briefcase, label: 'Lapangan Kerja', value: metrics.jobsCreated },
+    { icon: Leaf, label: 'CO₂ Terserap (ton)', value: metrics.co2Offset.toLocaleString() },
+    { icon: HandHelping, label: 'UMKM Didukung', value: metrics.umkmSupported },
   ];
 
-  // Mock data detail kontribusi per properti
-  const [propertyImpacts] = useState([
-    {
-      id: 1,
-      name: "Ruko Premium Sudirman - Blok A",
-      location: "Jakarta Pusat",
-      localLabor: 45,
-      umkmSupported: 8,
-      communityProgram: "Pelatihan Wirausaha Digital RT/RW",
-      status: "Aktif"
-    },
-    {
-      id: 2,
-      name: "Cluster Perumahan Halal As-Salam",
-      location: "Bogor, Jawa Barat",
-      localLabor: 72,
-      umkmSupported: 12,
-      communityProgram: "Pembangunan Sumur Bor & Balai Warga",
-      status: "Aktif"
-    },
-    {
-      id: 3,
-      name: "Gudang Logistik Syariah Cikarang",
-      location: "Bekasi, Jawa Barat",
-      localLabor: 25,
-      umkmSupported: 4,
-      communityProgram: "Beasiswa Anak Yatim Lingkungan Sekitar",
-      status: "Berjalan"
-    }
-  ]);
+  const sdgList = [
+    { num: 1, label: 'Tanpa Kemiskinan' },
+    { num: 4, label: 'Pendidikan Berkualitas' },
+    { num: 8, label: 'Pekerjaan Layak' },
+    { num: 11, label: 'Kota Berkelanjutan' },
+    { num: 17, label: 'Kemitraan' },
+  ];
 
   return (
-    <div className="space-y-6">
-      {/* Header Halaman */}
-      <div>
-        <h1 className="text-xl md:text-2xl font-bold text-neutral-800 font-brand">Laporan Dampak Sosial</h1>
-        <p className="text-sm text-neutral-600">Pantau bagaimana kontribusi modal Anda melahirkan nilai manfaat yang berkelanjutan bagi masyarakat luas.</p>
-      </div>
+    <div className="space-y-6 pb-20 md:pb-8">
+      <div><h1 className="text-2xl font-bold">Dampak Investasi</h1><p className="text-neutral-500">Dampak sosial, ekonomi, dan lingkungan dari investasi PROPIN</p></div>
 
-      <hr className="border-neutral-200" />
-
-      {/* Grid Metrik Utama */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {impactMetrics.map((metric) => (
-          <div key={metric.id} className="bg-white rounded-2xl border border-neutral-200/80 p-5 space-y-3 shadow-sm hover:border-gold-300 transition-all">
-            <div className="flex justify-between items-start">
-              <span className="text-2xl">{metric.icon}</span>
-              <span className="inline-flex items-center text-[10px] font-medium text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-full">
-                Verified
-              </span>
-            </div>
-            <div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-neutral-800 font-mono">{metric.value}</span>
-                <span className="text-xs font-semibold text-neutral-500">{metric.unit}</span>
-              </div>
-              <p className="text-xs font-bold text-neutral-700 mt-0.5">{metric.label}</p>
-              <p className="text-[11px] text-neutral-500 mt-1 leading-snug">{metric.desc}</p>
-            </div>
+      <div className="card-gold">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-gold-100 text-sm">Maqashid Syariah Impact Score</p>
+            <p className="text-4xl font-bold">{maqashidScore}/5</p>
+            <p className="text-gold-100">Sangat Baik</p>
           </div>
-        ))}
-      </div>
-
-      {/* Detail Laporan Proyek */}
-      <div className="bg-white rounded-2xl border border-neutral-200/80 shadow-sm overflow-hidden">
-        <div className="p-4 md:p-5 border-b border-neutral-100">
-          <h3 className="text-sm font-bold text-neutral-800">Distribusi Manfaat per Proyek Investasi</h3>
-          <p className="text-xs text-neutral-500">Transparansi data serapan sosial dari aset properti yang sedang berjalan di platform.</p>
+          <Award size={48} className="text-white/70" />
         </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-neutral-50 text-[11px] font-bold text-neutral-500 uppercase tracking-wider border-b border-neutral-200/60">
-                <th className="py-3.5 px-5">Nama Properti</th>
-                <th className="py-3.5 px-4">Tenaga Kerja</th>
-                <th className="py-3.5 px-4">Mitra UMKM</th>
-                <th className="py-3.5 px-4">Program Pemberdayaan Komunitas</th>
-                <th className="py-3.5 px-5 text-right">Status</th>
-              </tr>
-            </thead>
-            <tbody className="text-xs divide-y divide-neutral-100 text-neutral-700">
-              {propertyImpacts.map((item) => (
-                <tr key={item.id} className="hover:bg-neutral-50/50 transition-colors">
-                  <td className="py-4 px-5">
-                    <div className="font-semibold text-neutral-800">{item.name}</div>
-                    <div className="text-[10px] text-neutral-500">{item.location}</div>
-                  </td>
-                  <td className="py-4 px-4 font-mono font-medium">{item.localLabor} Orang</td>
-                  <td className="py-4 px-4 font-mono font-medium">{item.umkmSupported} Lapak</td>
-                  <td className="py-4 px-4 text-neutral-600 font-medium">{item.communityProgram}</td>
-                  <td className="py-4 px-5 text-right">
-                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-green-50 text-green-700 px-2 py-0.5 rounded-full border border-green-200/60">
-                      <span className="w-1 h-1 rounded-full bg-green-600"></span>
-                      {item.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="w-full h-2 bg-white/30 rounded-full mt-3 overflow-hidden">
+          <div className="h-full bg-white rounded-full" style={{ width: `${(maqashidScore / 5) * 100}%` }} />
         </div>
       </div>
 
-      {/* Filosofi & Kutipan Syariah */}
-      <div className="bg-neutral-800 text-white rounded-2xl p-5 border border-neutral-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="space-y-1 max-w-2xl">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-gold-400">Prinsip Fikih Muamalah</h4>
-          <p className="text-sm font-light italic leading-relaxed text-neutral-200">
-            "Investasi dalam Islam tidak melulu mencari return finansial belaka, tetapi wajib melahirkan kemaslahatan bersama (Maslahah Mursalah) dan mencegah mudarat di lingkungan sekitar."
-          </p>
-        </div>
-        <div className="bg-neutral-700 px-4 py-2 rounded-xl text-center self-stretch md:self-auto flex flex-col justify-center border border-neutral-600">
-          <span className="text-[10px] text-neutral-400 font-medium">Nilai Keberkahan</span>
-          <span className="text-base font-bold text-gold-400 font-brand">100% Berdampak</span>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {metricCards.map((card, i) => {
+          const Icon = card.icon;
+          return (
+            <div key={i} className="card text-center">
+              <Icon className="mx-auto text-gold-600 mb-1" size={20} />
+              <p className="text-xs text-neutral-500">{card.label}</p>
+              <p className="font-bold text-sm">{card.value}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="card">
+        <h3 className="font-semibold mb-3">Kontribusi SDGs</h3>
+        <div className="flex flex-wrap gap-3">
+          {sdgList.map(sdg => (
+            <div key={sdg.num} className="flex items-center gap-2 bg-neutral-50 px-3 py-1.5 rounded-full border border-neutral-200">
+              <span className="w-6 h-6 rounded-full bg-gold-600 text-white text-xs font-bold flex items-center justify-center">{sdg.num}</span>
+              <span className="text-xs text-neutral-600">{sdg.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

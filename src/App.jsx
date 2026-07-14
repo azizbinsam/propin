@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AppProvider } from './context/AppContext';
 import Sidebar from './components/Sidebar';
 import BottomNav from './components/BottomNav';
-import ErrorBoundary from './components/ErrorBoundary';
 
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
@@ -24,7 +23,6 @@ function AppContent() {
         <Sidebar />
       </div>
       <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
-        <ErrorBoundary>
         <Routes>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="marketplace" element={<Marketplace />} />
@@ -38,7 +36,6 @@ function AppContent() {
           <Route path="report" element={<Report />} />
           <Route path="*" element={<Navigate to="dashboard" replace />} />
         </Routes>
-        </ErrorBoundary>
       </main>
       <div className="md:hidden">
         <BottomNav />

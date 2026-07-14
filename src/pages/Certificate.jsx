@@ -9,15 +9,18 @@ export default function Certificate() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { ownedTokens } = useApp();
-  
-  const property = propertiesData.find(p => p.id === id);
-  const token = ownedTokens.find(t => t.id === id);
+
+  // Pastikan data ada
+  const property = propertiesData?.find(p => p.id === id);
+  const token = ownedTokens?.find(t => t.id === id);
 
   if (!property || !token) {
     return (
       <div className="p-8 text-center">
         <p>Sertifikat tidak ditemukan</p>
-        <button onClick={() => navigate('/app/wallet')} className="btn-primary mt-4">Kembali ke Wallet</button>
+        <button onClick={() => navigate('/app/wallet')} className="btn-primary mt-4">
+          Kembali ke Wallet
+        </button>
       </div>
     );
   }

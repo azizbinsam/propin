@@ -40,7 +40,8 @@ export default function AutoZakat() {
 
       <div className="card flex items-center justify-between">
         <div><p className="text-sm text-neutral-500">Mitra Penyalur</p><p className="font-semibold">{partner}</p></div>
-        <img src="https://via.placeholder.com/80x40?text=BAZNAS" alt="BAZNAS" className="h-8 object-contain" />
+        {/* Ganti dengan teks atau logo yang stabil */}
+        <span className="bg-neutral-100 px-3 py-1 rounded-full text-xs text-neutral-600">BAZNAS</span>
       </div>
 
       <button className="btn-secondary w-full py-3">Lihat Riwayat Zakat</button>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "prop-001",
+    "title": "Kost Eksklusif Muslim Kuningan",
+    "location": "Jakarta Selatan",
+    "category": "Residansial",
+    "akad": "Musharakah Mutanaqisah",
+    "totalValue": 2500000000,
+    "tokenPrice": 100000,
+    "totalTokens": 25000,
+    "tokensSold": 18750,
+    "projectedRoi": "11.5%",
+    "dividendPeriod": "Bulanan",
+    "image": "https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": "prop-002",
+    "title": "Ruko Komersial Halal Plaza",
+    "location": "Sleman, Yogyakarta",
+    "category": "Komersial",
+    "akad": "Ijarah Muntahiyah Bittamlik",
+    "totalValue": 1800000000,
+    "tokenPrice": 100000,
+    "totalTokens": 18000,
+    "tokensSold": 7200,
+    "projectedRoi": "9.8%",
+    "dividendPeriod": "Tiga Bulanan",
+    "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    "id": "prop-003",
+    "title": "Cluster Villa Syariah Heritage",
+    "location": "Batu, Malang",
+    "category": "Penginapan",
+    "akad": "Mudharabah",
+    "totalValue": 3200000000,
+    "tokenPrice": 200000,
+    "totalTokens": 16000,
+    "tokensSold": 14400,
+    "projectedRoi": "13.2%",
+    "dividendPeriod": "Tahunan",
+    "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80"
+  }
+]

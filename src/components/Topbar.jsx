@@ -12,7 +12,7 @@ export default function Topbar() {
           <Bell size={20} />
         </button>
         <div className="w-9 h-9 rounded-full bg-gold-gradient flex items-center justify-center text-white text-sm font-semibold">
-          A
+          SD
         </div>
       </div>
     </header>

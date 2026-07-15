@@ -3,10 +3,10 @@ import { Bell, TrendingUp, Store, Wallet, FileText } from 'lucide-react'
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
+import { useAppData } from '../context/AppContext'
 import { formatRupiah, formatPercent, formatNumber } from '../utils/format'
 
 import user from '../data/user.json'
-import portfolio from '../data/portfolio.json'
 
 const QUICK_MENU = [
   { icon: TrendingUp, label: 'Investasi', to: '/investasi' },
@@ -15,7 +15,7 @@ const QUICK_MENU = [
   { icon: FileText, label: 'Laporan', to: '/laporan' },
 ]
 
-function PortfolioCard() {
+function PortfolioCard({ portfolio }) {
   return (
     <Card variant="gold">
       <p className="text-sm opacity-90">Total Portfolio</p>
@@ -47,7 +47,7 @@ function QuickMenuCard() {
   )
 }
 
-function RingkasanAsetCard() {
+function RingkasanAsetCard({ portfolio }) {
   const stats = [
     { label: 'Properti', value: formatNumber(portfolio.totalProperties) },
     { label: 'Token Dimiliki', value: formatNumber(portfolio.totalTokens) },
@@ -68,7 +68,7 @@ function RingkasanAsetCard() {
   )
 }
 
-function ChartCard() {
+function ChartCard({ portfolio }) {
   return (
     <Card variant="default">
       <div className="flex items-center justify-between mb-2">
@@ -102,6 +102,8 @@ function ChartCard() {
 }
 
 export default function Dashboard() {
+  const { portfolio } = useAppData()
+
   return (
     <div>
       {/* Mobile-only header */}
@@ -124,16 +126,16 @@ export default function Dashboard() {
 
         <div className="space-y-5 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
           <div className="lg:col-span-2 lg:order-1">
-            <PortfolioCard />
+            <PortfolioCard portfolio={portfolio} />
           </div>
 
           <div className="lg:order-2 space-y-5">
             <QuickMenuCard />
-            <RingkasanAsetCard />
+            <RingkasanAsetCard portfolio={portfolio} />
           </div>
 
           <div className="lg:col-span-2 lg:order-3">
-            <ChartCard />
+            <ChartCard portfolio={portfolio} />
           </div>
         </div>
       </div>

@@ -75,13 +75,7 @@ function AssetRow({ holding }) {
 }
 
 export default function Wallet() {
-  const { holdings } = useAppData()
-
-  const totalTokens = holdings.reduce((sum, h) => sum + h.tokens, 0)
-  const totalValue = holdings.reduce((sum, h) => {
-    const property = properties.find((p) => p.id === h.propertyId)
-    return sum + (property ? h.tokens * property.pricePerToken : 0)
-  }, 0)
+  const { holdings, portfolio } = useAppData()
 
   return (
     <div className="pb-8">
@@ -94,7 +88,7 @@ export default function Wallet() {
 
         <div className="space-y-4">
           <WalletAddressCard />
-          <TotalKepemilikanCard totalTokens={totalTokens} totalValue={totalValue} />
+          <TotalKepemilikanCard totalTokens={portfolio.totalTokens} totalValue={portfolio.totalValue} />
 
           <Card variant="default">
             <p className="text-sm font-semibold text-neutral-700 mb-1">Aset Properti</p>

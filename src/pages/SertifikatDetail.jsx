@@ -51,7 +51,9 @@ export default function SertifikatDetail() {
     )
   }
 
-  const relatedTx = transactions.find((t) => t.propertyId === propertyId)
+  const relatedTx = transactions
+    .filter((t) => t.propertyId === propertyId)
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))[0]
   const issuedDate = relatedTx
     ? new Date(relatedTx.createdAt)
     : new Date('2026-05-12T09:30:00.000Z')

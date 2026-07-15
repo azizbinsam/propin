@@ -3,9 +3,31 @@
     "id": "tx-initial-001",
     "propertyId": "apartemen-bsd",
     "propertyName": "Apartemen BSD",
-    "tokenAmount": 20,
+    "tokenAmount": 1800,
     "nominal": 500000,
     "txHash": "0x7d3f...97a2",
+    "status": "Executed",
+    "createdAt": "2026-05-12T09:30:00.000Z"
+  },
+
+  {
+    "id": "tx-initial-002",
+    "propertyId": "ila-tanjung-lesung",
+    "propertyName": "Vila Tanjung Lesung",
+    "tokenAmount": 900,
+    "nominal": 500000,
+    "txHash": "0x7d3f...97a1",
+    "status": "Executed",
+    "createdAt": "2026-05-12T09:30:00.000Z"
+  },
+
+  {
+    "id": "tx-initial-003",
+    "propertyId": "hotel-jogja-syariah",
+    "propertyName": "Hotel Jogja Syariah",
+    "tokenAmount": 1200,
+    "nominal": 500000,
+    "txHash": "0x7d3f...97a3",
     "status": "Executed",
     "createdAt": "2026-05-12T09:30:00.000Z"
   }

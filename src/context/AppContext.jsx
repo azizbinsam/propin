@@ -1,6 +1,8 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 import initialTransactions from '../data/transactions.json'
 import initialHoldings from '../data/holdings.json'
+import properties from '../data/properties.json'
+import portfolioBase from '../data/portfolio.json'
 import { generateTxHash } from '../utils/blockchain'
 
 const AppContext = createContext(null)
@@ -8,6 +10,41 @@ const AppContext = createContext(null)
 export function AppProvider({ children }) {
   const [holdings, setHoldings] = useState(initialHoldings)
   const [transactions, setTransactions] = useState(initialTransactions)
+
+  // Portfolio dihitung otomatis dari holdings + properties, jadi selalu
+  // sinkron begitu ada pembelian baru (bukan angka statis lagi).
+  const portfolio = useMemo(() => {
+    let totalValue = 0
+    let weightedReturnSum = 0
+
+    holdings.forEach((holding) => {
+      const property = properties.find((p) => p.id === holding.propertyId)
+      if (!property) return
+      const value = holding.tokens * property.pricePerToken
+      totalValue += value
+      weightedReturnSum += value * property.projectedReturnPercent
+    })
+
+    const averageReturnPercent = totalValue > 0 ? weightedReturnSum / totalValue : 0
+    const totalReturn = totalValue * (averageReturnPercent / 100)
+    const totalTokens = holdings.reduce((sum, h) => sum + h.tokens, 0)
+
+    // Grafik kinerja tetap pakai histori bulan-bulan sebelumnya (mock),
+    // hanya titik terakhir yang di-update mengikuti nilai portofolio saat ini.
+    const performanceHistory = portfolioBase.performanceHistory.map((point, i, arr) =>
+      i === arr.length - 1 ? { ...point, value: totalValue } : point
+    )
+
+    return {
+      totalValue,
+      totalReturn,
+      totalReturnPercent: averageReturnPercent,
+      totalProperties: holdings.length,
+      totalTokens,
+      averageReturnPercent,
+      performanceHistory,
+    }
+  }, [holdings])
 
   function addPurchase({ property, tokenAmount, nominal }) {
     const txId = `tx-${Date.now()}`
@@ -50,7 +87,7 @@ export function AppProvider({ children }) {
   }
 
   return (
-    <AppContext.Provider value={{ holdings, transactions, addPurchase }}>
+    <AppContext.Provider value={{ holdings, transactions, portfolio, addPurchase }}>
       {children}
     </AppContext.Provider>
   )

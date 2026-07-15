@@ -1,0 +1,27 @@
+{
+  "nisabThreshold": 85000000,
+  "zakatPercent": 2.5,
+  "haul": {
+    "startDate": "2025-08-01",
+    "endDate": "2026-08-01",
+    "totalDays": 365,
+    "daysRemaining": 17
+  },
+  "partner": "BAZNAS",
+  "history": [
+    {
+      "id": "zkt-001",
+      "periodLabel": "Haul 2024/2025",
+      "date": "2025-08-01",
+      "amount": 2680000,
+      "status": "Tersalurkan"
+    },
+    {
+      "id": "zkt-002",
+      "periodLabel": "Haul 2023/2024",
+      "date": "2024-08-05",
+      "amount": 1950000,
+      "status": "Tersalurkan"
+    }
+  ]
+}

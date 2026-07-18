@@ -3,7 +3,7 @@ import { Bell, TrendingUp, Store, Wallet, FileText } from 'lucide-react'
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
-import { useAppData } from '../context/AppContext'
+import { usePortfolio } from '../context/PortfolioContext'
 import { formatRupiah, formatPercent, formatNumber } from '../utils/format'
 
 import user from '../data/user.json'
@@ -11,7 +11,7 @@ import user from '../data/user.json'
 const QUICK_MENU = [
   { icon: TrendingUp, label: 'Investasi', to: '/investasi' },
   { icon: Store, label: 'Marketplace', to: '/marketplace' },
-  { icon: Wallet, label: 'Wallet', to: '/wallet' },
+  { icon: Wallet, label: 'Dompet', to: '/dompet' },
   { icon: FileText, label: 'Laporan', to: '/laporan' },
 ]
 
@@ -35,7 +35,7 @@ function QuickMenuCard() {
     <Card variant="default" padding="sm">
       <div className="grid grid-cols-4 gap-2">
         {QUICK_MENU.map(({ icon: Icon, label, to }) => (
-          <Link key={label} to={to} className="flex flex-col items-center gap-1.5 py-2 rounded-btn hover:bg-gold-50 transition-colors">
+          <Link key={label} to={to} className="flex flex-col items-center gap-1.5 py-2 rounded-xl hover:bg-gold-50 transition-colors">
             <div className="w-10 h-10 rounded-full bg-gold-50 flex items-center justify-center">
               <Icon size={18} className="text-gold-600" />
             </div>
@@ -58,7 +58,7 @@ function RingkasanAsetCard({ portfolio }) {
       <p className="text-sm font-semibold text-neutral-700 mb-3">Ringkasan Aset</p>
       <div className="grid grid-cols-3 gap-2">
         {stats.map(({ label, value }) => (
-          <div key={label} className="bg-neutral-0 rounded-btn border border-neutral-200 px-2 py-3 text-center">
+          <div key={label} className="bg-neutral-0 rounded-xl border border-neutral-200 px-2 py-3 text-center">
             <p className="text-sm font-bold text-neutral-800">{value}</p>
             <p className="text-[10px] text-neutral-500 mt-0.5">{label}</p>
           </div>
@@ -102,11 +102,10 @@ function ChartCard({ portfolio }) {
 }
 
 export default function Dashboard() {
-  const { portfolio } = useAppData()
+  const { portfolio } = usePortfolio()
 
   return (
     <div>
-      {/* Mobile-only header */}
       <header className="lg:hidden sticky top-0 z-30 bg-neutral-0 border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
         <div>
           <span className="font-serif text-lg font-bold text-gold-700">PROPIN</span>

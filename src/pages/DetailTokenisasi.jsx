@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
-import properties from '../data/properties.json'
+import { useProperties } from '../context/PropertiesContext'
+import { usePortfolio } from '../context/PortfolioContext'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
-import { useAppData } from '../context/AppContext'
 import { formatRupiah, formatPercent, formatNumber } from '../utils/format'
 
 const CATEGORY_GRADIENT = {
@@ -17,11 +17,22 @@ const CATEGORY_GRADIENT = {
 export default function DetailTokenisasi() {
   const { propertyId } = useParams()
   const navigate = useNavigate()
-  const { addPurchase } = useAppData()
+  const { activeProperties } = useProperties()
+  const { transactions, addPurchase } = usePortfolio()
 
-  const property = properties.find((p) => p.id === propertyId)
+  const property = activeProperties.find((p) => p.id === propertyId)
   const [nominal, setNominal] = useState(property?.minInvestment ?? 0)
   const [submitting, setSubmitting] = useState(false)
+  const [pendingTxId, setPendingTxId] = useState(null)
+
+  // Watch for transaction to appear in context, then navigate
+  useEffect(() => {
+    if (!pendingTxId) return
+    const found = transactions.find((t) => t.id === pendingTxId)
+    if (found) {
+      navigate(`/transaksi/${pendingTxId}`, { state: { justPurchased: true } })
+    }
+  }, [transactions, pendingTxId, navigate])
 
   if (!property) {
     return (
@@ -46,10 +57,12 @@ export default function DetailTokenisasi() {
   function handleBuy() {
     if (!isValid || submitting) return
     setSubmitting(true)
+    // Small delay to show loading state
     setTimeout(() => {
       const txId = addPurchase({ property, tokenAmount, nominal })
-      navigate(`/transaksi/${txId}`, { state: { justPurchased: true } })
-    }, 1200)
+      setPendingTxId(txId)
+      // Navigation will happen via useEffect when transaction appears in context
+    }, 800)
   }
 
   return (

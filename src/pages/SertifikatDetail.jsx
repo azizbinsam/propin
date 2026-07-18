@@ -4,7 +4,6 @@ import { QRCodeSVG } from 'qrcode.react'
 import { ChevronLeft, ShieldCheck, X } from 'lucide-react'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
-import { useAppData } from '../context/AppContext'
 import { generateTokenId } from '../utils/blockchain'
 import { formatNumber, formatPercent } from '../utils/format'
 
@@ -34,7 +33,7 @@ function VerifyModal({ onClose }) {
 export default function SertifikatDetail() {
   const { tokenId: propertyId } = useParams()
   const navigate = useNavigate()
-  const { holdings, transactions } = useAppData()
+  const { holdings, transactions } = usePortfolio()
   const [showVerify, setShowVerify] = useState(false)
 
   const holding = holdings.find((h) => h.propertyId === propertyId)

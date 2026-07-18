@@ -1,15 +1,22 @@
 import { Outlet } from 'react-router-dom'
 import useIsDesktop from '../hooks/useIsDesktop'
-import MobileLayout from './MobileLayout'
-import DesktopLayout from './DesktopLayout'
+import DesktopLayout from '../layouts/DesktopLayout'
+import MobileLayout from '../layouts/MobileLayout'
 
 export default function ResponsiveShell() {
   const isDesktop = useIsDesktop()
-  const Layout = isDesktop ? DesktopLayout : MobileLayout
+
+  if (isDesktop) {
+    return (
+      <DesktopLayout>
+        <Outlet />
+      </DesktopLayout>
+    )
+  }
 
   return (
-    <Layout>
+    <MobileLayout>
       <Outlet />
-    </Layout>
+    </MobileLayout>
   )
 }

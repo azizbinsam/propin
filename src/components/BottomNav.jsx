@@ -4,7 +4,7 @@ import { Home, Store, Wallet, HandCoins, Settings } from 'lucide-react'
 const NAV_ITEMS = [
   { to: '/dashboard', icon: Home, label: 'Beranda' },
   { to: '/marketplace', icon: Store, label: 'Marketplace' },
-  { to: '/wallet', icon: Wallet, label: 'Dompet' },
+  { to: '/dompet', icon: Wallet, label: 'Dompet' },
   { to: '/zakat', icon: HandCoins, label: 'Zakat' },
   { to: '/akun', icon: Settings, label: 'Pengaturan' },
 ]

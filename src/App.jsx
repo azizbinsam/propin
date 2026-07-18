@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './context/AuthContext'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useProperties } from './context/PropertiesContext'
+import { PortfolioProvider } from './context/PortfolioContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AdminRoute } from './components/AdminRoute'
 import ResponsiveShell from './layouts/ResponsiveShell'
@@ -18,8 +19,7 @@ import Marketplace from './pages/Marketplace'
 import PropertyDetail from './pages/PropertyDetail'
 import DetailTokenisasi from './pages/DetailTokenisasi'
 import Investasi from './pages/Investasi'
-import Wallet from './pages/Wallet'
-import TransaksiList from './pages/TransaksiList'
+import DompetTransaksi from './pages/DompetTransaksi'
 import DetailTransaksi from './pages/DetailTransaksi'
 import SertifikatList from './pages/SertifikatList'
 import SertifikatDetail from './pages/SertifikatDetail'
@@ -39,26 +39,32 @@ import AdminPengaturan from './pages/admin/AdminPengaturan'
 
 import NotFound from './pages/NotFound'
 
-function App() {
+function AppWithPortfolio() {
+  const { properties } = useProperties()
   return (
-    <BrowserRouter>
+    <PortfolioProvider properties={properties}>
+      <AppRoutes />
+    </PortfolioProvider>
+  )
+}
+
+function AppRoutes() {
+  return (
+    <>
       <ToastContainer />
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/styleguide" element={<Styleguide />} />
 
-        {/* User routes — protected */}
         <Route element={<ResponsiveShell />}>
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
           <Route path="/marketplace/:propertyId" element={<ProtectedRoute><PropertyDetail /></ProtectedRoute>} />
           <Route path="/tokenisasi/:propertyId" element={<ProtectedRoute><DetailTokenisasi /></ProtectedRoute>} />
           <Route path="/investasi" element={<ProtectedRoute><Investasi /></ProtectedRoute>} />
-          <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
-          <Route path="/transaksi" element={<ProtectedRoute><TransaksiList /></ProtectedRoute>} />
+          <Route path="/dompet" element={<ProtectedRoute><DompetTransaksi /></ProtectedRoute>} />
           <Route path="/transaksi/:txId" element={<ProtectedRoute><DetailTransaksi /></ProtectedRoute>} />
           <Route path="/sertifikat" element={<ProtectedRoute><SertifikatList /></ProtectedRoute>} />
           <Route path="/sertifikat/:tokenId" element={<ProtectedRoute><SertifikatDetail /></ProtectedRoute>} />
@@ -69,7 +75,6 @@ function App() {
           <Route path="/akun" element={<ProtectedRoute><Akun /></ProtectedRoute>} />
         </Route>
 
-        {/* Admin routes — protected + admin only */}
         <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/properti" element={<AdminProperti />} />
@@ -79,9 +84,16 @@ function App() {
           <Route path="/admin/pengaturan" element={<AdminPengaturan />} />
         </Route>
 
-        {/* Catch all */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppWithPortfolio />
     </BrowserRouter>
   )
 }

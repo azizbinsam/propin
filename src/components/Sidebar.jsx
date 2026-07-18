@@ -1,12 +1,10 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import {
-  LayoutDashboard, Store, Wallet, HandCoins, Settings,
-} from 'lucide-react'
+import { LayoutDashboard, Store, Wallet, HandCoins, Settings } from 'lucide-react'
 
 const NAV_ITEMS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/marketplace', icon: Store, label: 'Marketplace Properti', matchPrefixes: ['/marketplace', '/tokenisasi'] },
-  { to: '/wallet', icon: Wallet, label: 'Dompet & Transaksi', matchPrefixes: ['/wallet', '/transaksi', '/sertifikat'] },
+  { to: '/dompet', icon: Wallet, label: 'Dompet & Transaksi', matchPrefixes: ['/dompet', '/transaksi', '/sertifikat'] },
   { to: '/zakat', icon: HandCoins, label: 'Auto-Zakat' },
   { to: '/akun', icon: Settings, label: 'Pengaturan', matchPrefixes: ['/akun', '/ai-assistant', '/dampak', '/laporan'] },
 ]
@@ -55,7 +53,7 @@ export default function Sidebar() {
             S
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-medium truncate">Siti Aminah</p>
+            <p className="text-sm font-medium truncate">Sinta Dewi</p>
             <p className="text-[11px] text-neutral-400 truncate">Investor</p>
           </div>
         </NavLink>

@@ -28,6 +28,7 @@ export default function DetailTokenisasi() {
   // Watch for transaction to appear in context, then navigate
   useEffect(() => {
     if (!pendingTxId) return
+
     const found = transactions.find((t) => t.id === pendingTxId)
     if (found) {
       navigate(`/transaksi/${pendingTxId}`, { state: { justPurchased: true } })
@@ -57,12 +58,14 @@ export default function DetailTokenisasi() {
   function handleBuy() {
     if (!isValid || submitting) return
     setSubmitting(true)
-    // Small delay to show loading state
+
+    const txId = addPurchase({ property, tokenAmount, nominal })
+    setPendingTxId(txId)
+
+    // Safety fallback: if useEffect doesn't trigger within 2s, force navigation
     setTimeout(() => {
-      const txId = addPurchase({ property, tokenAmount, nominal })
-      setPendingTxId(txId)
-      // Navigation will happen via useEffect when transaction appears in context
-    }, 800)
+      navigate(`/transaksi/${txId}`, { state: { justPurchased: true } })
+    }, 2000)
   }
 
   return (

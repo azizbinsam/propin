@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo, useState, useEffect } from 'react'
 import initialTransactions from '../data/transactions.json'
 import initialHoldings from '../data/holdings.json'
 import portfolioBase from '../data/portfolio.json'
@@ -6,11 +6,37 @@ import { generateTxHash } from '../utils/blockchain'
 
 const PortfolioContext = createContext(null)
 
-export function PortfolioProvider({ children, properties }) {
-  const [holdings, setHoldings] = useState(initialHoldings)
-  const [transactions, setTransactions] = useState(initialTransactions)
+const STORAGE_KEY = 'propin_portfolio'
 
-  // Portfolio computed from holdings + properties (single source of truth)
+function loadFromStorage() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      return {
+        transactions: parsed.transactions || initialTransactions,
+        holdings: parsed.holdings || initialHoldings,
+      }
+    }
+  } catch {
+    // ignore parse errors
+  }
+  return {
+    transactions: initialTransactions,
+    holdings: initialHoldings,
+  }
+}
+
+export function PortfolioProvider({ children, properties }) {
+  const stored = loadFromStorage()
+  const [holdings, setHoldings] = useState(stored.holdings)
+  const [transactions, setTransactions] = useState(stored.transactions)
+
+  // Persist to localStorage whenever holdings or transactions change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ holdings, transactions }))
+  }, [holdings, transactions])
+
   const portfolio = useMemo(() => {
     let totalValue = 0
     let weightedReturnSum = 0
@@ -27,7 +53,6 @@ export function PortfolioProvider({ children, properties }) {
     const totalReturn = totalValue * (averageReturnPercent / 100)
     const totalTokens = holdings.reduce((sum, h) => sum + h.tokens, 0)
 
-    // Performance history: update last point with current totalValue
     const performanceHistory = portfolioBase.performanceHistory.map((point, i, arr) =>
       i === arr.length - 1 ? { ...point, value: totalValue } : point
     )
@@ -83,16 +108,11 @@ export function PortfolioProvider({ children, properties }) {
     return txId
   }
 
-  function addTransaction(transaction) {
-    setTransactions((prev) => [transaction, ...prev])
-  }
-
   const value = {
     holdings,
     transactions,
     portfolio,
     addPurchase,
-    addTransaction,
   }
 
   return (

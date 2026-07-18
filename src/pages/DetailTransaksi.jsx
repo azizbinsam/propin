@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { ChevronLeft, CheckCircle2, Circle } from 'lucide-react'
-import { useAppData } from '../context/AppContext'
+import { usePortfolio } from '../context/PortfolioContext'
 import { formatRupiah, formatNumber } from '../utils/format'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
@@ -14,16 +14,45 @@ const STEPS = [
   { key: 'completed', title: 'Completed', desc: () => 'Transaksi selesai' },
 ]
 
+function findTransaction(txId, contextTransactions) {
+  // 1. Try context first
+  const fromContext = contextTransactions.find((t) => t.id === txId)
+  if (fromContext) return fromContext
+
+  // 2. Fallback to localStorage
+  try {
+    const stored = JSON.parse(localStorage.getItem('propin_portfolio') || '{}')
+    const fromStorage = stored.transactions?.find((t) => t.id === txId)
+    if (fromStorage) return fromStorage
+  } catch {
+    // ignore
+  }
+
+  return null
+}
+
 export default function DetailTransaksi() {
   const { txId } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
-  const { transactions } = useAppData()
+  const { transactions } = usePortfolio()
 
-  const transaction = transactions.find((t) => t.id === txId)
+  const [transaction, setTransaction] = useState(() => findTransaction(txId, transactions))
   const justPurchased = Boolean(location.state?.justPurchased)
-
   const [visibleSteps, setVisibleSteps] = useState(justPurchased ? 0 : STEPS.length)
+
+  // Keep checking for transaction if not found immediately
+  useEffect(() => {
+    if (transaction) return
+    const timer = setInterval(() => {
+      const found = findTransaction(txId, transactions)
+      if (found) {
+        setTransaction(found)
+        clearInterval(timer)
+      }
+    }, 100)
+    return () => clearInterval(timer)
+  }, [txId, transactions, transaction])
 
   useEffect(() => {
     if (!justPurchased || visibleSteps >= STEPS.length) return
@@ -35,8 +64,9 @@ export default function DetailTransaksi() {
     return (
       <div className="p-6 text-center">
         <p className="text-neutral-600">Transaksi tidak ditemukan.</p>
-        <Button variant="outline" className="mt-4" onClick={() => navigate('/wallet')}>
-          Kembali ke Wallet
+        <p className="text-xs text-neutral-400 mt-2">ID: {txId}</p>
+        <Button variant="outline" className="mt-4" onClick={() => navigate('/dompet')}>
+          Kembali ke Dompet
         </Button>
       </div>
     )
@@ -100,8 +130,8 @@ export default function DetailTransaksi() {
             </div>
 
             {justPurchased && (
-              <Button variant="primary" fullWidth className="mt-5" onClick={() => navigate('/wallet')}>
-                Lihat di Wallet
+              <Button variant="primary" fullWidth className="mt-5" onClick={() => navigate('/dompet')}>
+                Lihat di Dompet
               </Button>
             )}
           </div>

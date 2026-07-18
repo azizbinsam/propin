@@ -35,6 +35,7 @@ export function PropertiesProvider({ children }) {
     setProperties((prev) => prev.filter((p) => p.id !== id))
   }
 
+  // FIX: Include properties without status field (backward compatible)
   const activeProperties = properties.filter((p) => !p.status || p.status === 'Aktif')
 
   const value = {

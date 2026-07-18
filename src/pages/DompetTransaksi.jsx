@@ -9,7 +9,7 @@ import { usePortfolio } from '../context/PortfolioContext'
 import { useProperties } from '../context/PropertiesContext'
 import { useAuth } from '../context/AuthContext'
 import { toast } from '../components/Toast'
-import { formatRupiah, formatNumber } from '../utils/format'
+import { formatRupiah, formatNumber, formatPercent } from '../utils/format'
 
 const PERIODES = [
   { key: '24H', label: '24J' },

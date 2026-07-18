@@ -1,8 +1,10 @@
 # Design System — PROPIN
 ### Tema: Gold Dominan, Hijau sebagai Secondary
-**Versi:** 1.0 — Pendamping `PRD.md`
+**Versi:** 2.1 — Pendamping `PRD.md`
 
 > Catatan konteks: Mockup asli PROPIN menggunakan hijau tua sebagai warna dominan dengan gold sebagai aksen. Sesuai permintaan, sistem desain ini **membalik hierarki warna**: gold menjadi warna dominan/brand utama, hijau menjadi secondary (dipakai untuk elemen "sukses", "syariah/halal", dan status positif) — tanpa mengubah struktur informasi & layout yang sudah ada di mockup.
+
+> **Update v2.0:** Struktur layout & alur halaman kini mengacu ke referensi [halpin.vercel.app](https://halpin.vercel.app) (lihat `PRD.md` v2.0) — termasuk halaman Auth, Kalkulator Investasi, Dompet & Transaksi gabungan, AI Assistant + video edukasi, Pengaturan, dan **Admin Panel terpisah**. **Palet warna gold/hijau di Bagian 2 tidak berubah** dan berlaku untuk kedua sisi (User & Admin). Komponen & pola layout baru didokumentasikan di **Bagian 11** (baru) di akhir dokumen ini — baca Bagian 1–10 sebagai fondasi yang tetap berlaku, lalu Bagian 11 sebagai tambahan/perluasan untuk kebutuhan v2.0.
 
 ---
 
@@ -246,6 +248,137 @@ colors: {
   },
 }
 ```
+
+---
+
+---
+
+## 11. Komponen & Pola Layout Tambahan (v2.0)
+
+Bagian ini mendokumentasikan komponen baru yang muncul akibat restrukturisasi flow mengikuti referensi HALPIN (Auth, Kalkulator Investasi, Dompet & Transaksi gabungan, AI Assistant + video edukasi, Pengaturan) dan **Admin Panel**. Semua komponen di bawah tetap memakai token warna, tipografi, spacing, dan radius dari Bagian 2–4 — tidak ada palet baru.
+
+### 11.1 Prinsip Admin vs User
+
+| Aspek | Sisi User | Sisi Admin |
+|---|---|---|
+| Kepadatan layout | Lega, card-based, banyak white space | Data-dense, tabel-sentris, padding lebih ringkas |
+| Sidebar | `neutral-0`/`neutral-50`, item aktif background `gold-50` + left-border `gold-600` (lihat 5.6) | Background `neutral-900`-tint gelap **atau** tetap `neutral-0` dengan header sidebar bar solid `gold-600` (pilih salah satu saat implementasi, tapi harus konsisten) — struktur menu & urutan **berbeda total** dari sidebar User, lihat PRD 5.4 |
+| Komponen utama | Card, progress bar, chart besar | Tabel, form, badge status, filter bar |
+| Warna aksen | 30% gold / 10% hijau (aturan 60-30-10, lihat 2.6) | Aturan rasio sama, tapi gold dipakai lebih hemat (mis. hanya header, tombol primer, badge aktif) agar tabel data tetap mudah dipindai (scannable) |
+| Navigasi mobile | Bottom nav 5 item | Tidak ada bottom nav — hamburger → drawer sidebar (desktop-first) |
+
+> Tujuan pemisahan ini bukan membuat dua "brand" berbeda, melainkan dua *mode kerja* dari brand yang sama — seperti cockpit vs cabin pada pesawat yang sama.
+
+### 11.2 Halaman Auth (Login/Register)
+
+- Layout: card tunggal terpusat (max-width ±400px) di atas background `neutral-50`, opsional dengan aksen dekoratif gold-gradient di sisi kiri pada layar desktop lebar (split-screen 40/60).
+- Logo PROPIN (serif wordmark) di atas form.
+- Input field: border `neutral-200`, radius `12px`, focus state border `gold-600` + ring tipis `gold-100`.
+- Tombol submit primer: penuh lebar, style Button Primary (Bagian 5.1).
+- Link sekunder ("Belum punya akun? Daftar"): teks `gold-700`, underline on hover.
+- Toast sukses login: background `green-50`, teks `green-700`, ikon check.
+- Error validasi field: border input jadi `#C0392B` (error, Bagian 2.4), teks bantuan kecil di bawah field warna sama.
+
+### 11.3 Kalkulator Investasi (Landing Page)
+
+- Container: Card besar (Bagian 5.2) dengan sedikit elevasi lebih tinggi dari card biasa (`shadow: 0 4px 16px rgba(30,27,21,0.08)`) agar terasa sebagai "tool" interaktif, bukan sekadar info.
+- Layout 2 kolom di desktop (kiri: form input, kanan: hasil proyeksi), stack vertikal di mobile.
+- Dropdown "Pilih Properti": style Select standar (11.6), menampilkan nama + ERY di tiap opsi.
+- Input nominal: input besar dengan prefix "Rp", font angka `IBM Plex Mono`/`Inter` 700 sesuai Bagian 3, live-update label "= X.XXX Token" di bawahnya dalam warna `gold-700`.
+- Tab pill jangka waktu (1/3/5 Tahun): pill radius `9999px`, state aktif background `gold-600` teks putih, inactive background `neutral-100` teks `neutral-600`.
+- 4 card hasil proyeksi (grid 2×2 mobile, 4 kolom desktop): tiap card icon bulat kecil (background `gold-50` atau `green-50` tergantung makna — Estimasi Imbal Hasil & Total Aset pakai aksen gold, Auto Zakat & Pendapatan Bersih pakai aksen hijau sesuai aturan "hijau = status/kepatuhan, gold = nilai finansial" di 5.4), label kecil di atas, nominal besar di bawah, sub-caption tipis.
+- Disclaimer di bawah kalkulator: teks `neutral-400`, ukuran caption (11–12px), ikon ⚠️ kecil.
+
+### 11.4 Dompet & Transaksi — Komponen Khusus
+
+- **Chart Pertumbuhan Saldo:** Recharts area/line chart, stroke `gold-600`, area fill gradient gold opacity rendah (selaras Bagian 5.7). Toggle periode (`24H` `7D` `1M` `1Y`) sebagai tab pill kecil di kanan atas chart, gaya sama seperti tab pill Kalkulator.
+- **Riwayat Transaksi — item list:** ikon arah dalam lingkaran kecil (masuk: background `green-50` icon `green-600` panah ↙; keluar: background `gold-50` icon `gold-700` panah ↗), judul transaksi + sub-label (properti/lembaga terkait) di kiri, nominal + tanggal rata kanan.
+- **Rekening Bank card:** card kecil horizontal, icon bank dalam kotak radius `12px` background `neutral-100`, nomor rekening tersamar (`****5678`) + nama pemilik.
+
+### 11.5 Auto Zakat — Mini Dashboard Emas & Nisab
+
+- Card terpisah di bawah breakdown zakat per properti.
+- Header dengan icon 🥇 dalam badge bulat `gold-100`.
+- 3 metric ringkas berjajar: Harga Saat Ini (+ indikator naik/turun kecil, hijau untuk naik/positif secara nilai, merah-muted `#C0392B` hanya jika turun — dipakai sangat jarang sesuai Bagian 2.4), Nisab (85gr), Status Nisab Anda (badge hijau "Terpenuhi ✓" atau badge netral "Belum Terpenuhi").
+- Mini chart tren harga emas: line chart tipis, stroke `gold-500`, tanpa area fill (biar ringan secara visual, membedakan dari chart utama saldo), toggle periode `1B` `3B` `6B` `1T` sama seperti pola tab pill lainnya.
+- Disclaimer sumber data: caption kecil `neutral-400`.
+
+### 11.6 Form Components (Pengaturan, Auth, Form Admin)
+
+| Komponen | Style |
+|---|---|
+| Input text | Height 44px, padding 12px, border `neutral-200` 1px, radius `12px`, placeholder `neutral-400`, focus border `gold-600` + ring `gold-100` 3px |
+| Select/Dropdown | Sama seperti Input, chevron icon `neutral-600` di kanan, opsi terpilih highlight background `gold-50` |
+| Textarea | Sama seperti Input, min-height 96px |
+| Checkbox | 18×18px, radius `4px`, unchecked border `neutral-300`, checked background `gold-600` dengan check putih |
+| Toggle/Switch (mis. 2FA) | Track `neutral-200` (off) / `green-600` (on), thumb putih, transisi 150ms |
+| Upload foto profil | Lingkaran/kotak radius `16px` dengan border dashed `neutral-300`, icon kamera `neutral-400`, preview menggantikan placeholder setelah upload lokal |
+| Label field | `neutral-600`, 12–13px, medium weight, margin-bottom 6px |
+| Helper/error text | 11–12px, `neutral-400` (helper) atau `#C0392B` (error) |
+
+### 11.7 Filter Chip / Tab Pill (Marketplace, Kalkulator, Toggle Periode)
+
+- Radius penuh (`9999px`), padding horizontal 14–16px, height ±36px.
+- State default: background `neutral-100`, teks `neutral-600`.
+- State aktif: background `gold-600`, teks putih, sedikit shadow gold lembut.
+- Scroll horizontal di mobile tanpa scrollbar terlihat (`overflow-x-auto` + hide scrollbar), spacing antar chip 8px.
+
+### 11.8 AI Assistant — Video Edukasi Card
+
+- Card kecil horizontal atau grid 2 kolom (mobile) / list (desktop panel chat sempit).
+- Thumbnail radius `12px` dengan overlay ikon play (lingkaran putih semi-transparan, icon `▶` gold di tengah saat hover/desktop).
+- Badge status pojok kiri-atas thumbnail: `POPULER` (background `gold-600`), `BARU` (background `green-600`), `SELESAI` (background `neutral-400`) — teks putih, ukuran mini (10px), radius `6px`.
+- Judul video 2 baris max (truncate), sub-caption: sumber · durasi · level (badge kecil outline sesuai level: Pemula `green-300` outline, Menengah `gold-300` outline, Lanjutan `neutral-400` outline).
+
+### 11.9 Admin Panel — Tabel Data
+
+- Header tabel: background `neutral-50`, teks `neutral-600` uppercase kecil (11px), letter-spacing sedikit lebar.
+- Baris: border-bottom `neutral-200` 1px, hover background `gold-50` tipis (opacity rendah) untuk menandakan baris interaktif.
+- Sel status: pakai Badge/Status Pill (Bagian 5.3) — mis. KYC `Menunggu` (background `gold-100`, teks `gold-800`), `Terverifikasi` (background `green-50`, teks `green-700`), `Ditolak` (background `neutral-100`, teks `#C0392B`).
+- Aksi per-baris: ikon outline kecil (`neutral-600`, hover `gold-600`) — Edit (pensil), Lihat (mata), Nonaktifkan (toggle).
+- Pagination bawah tabel: teks `neutral-600`, halaman aktif `gold-600` bold.
+- Toolbar tabel (search + filter + tombol "+ Tambah"): search input style 11.6, tombol "+ Tambah" = Button Primary.
+
+### 11.10 Admin Panel — Sidebar
+
+- Struktur berbeda total dari sidebar User (lihat PRD Bagian 5.4): 6 item (Dashboard Admin, Manajemen Properti, Manajemen Investor, Monitoring Transaksi, Monitoring Auto Zakat, Pengaturan Admin), tanpa grup marketing/landing.
+- Header sidebar: logo PROPIN + label kecil "Admin Panel" (badge `gold-100` teks `gold-800`) untuk membedakan tegas dari sisi User saat screenshot/demo berdampingan.
+- Item aktif: sama polanya dengan sidebar User (background `gold-50`, left-border `gold-600`) — konsistensi brand tetap dijaga meski struktur menu berbeda.
+- Lebar 240px sama seperti sidebar User, agar komponen `Sidebar` dasar bisa direuse dengan config data menu berbeda (bukan komponen terpisah dari nol).
+
+### 11.11 Empty State, Error State, & Skeleton Loading
+
+Dirujuk dari `PRD.md` Bagian 15 (Matriks State Kosong/Error/Edge Case). Pola visual berikut wajib dipakai konsisten di seluruh modul agar prototype tidak terasa "kosong tanpa penjelasan" saat didemokan.
+
+**Empty State (generik):**
+- Container center-aligned, padding vertikal besar (48–64px) di dalam Card/tabel.
+- Ikon outline besar (48–64px) warna `neutral-300` — bukan warna brand, agar tidak terkesan seperti elemen aktif.
+- Judul singkat `neutral-600` (14–16px, medium), sub-caption opsional `neutral-400` (12–13px).
+- CTA opsional di bawahnya: Button Outline (bukan Primary) — empty state bukan aksi utama halaman, jadi tidak boleh terlalu menonjol.
+
+**Error State (inline, per-field):**
+- Border input berubah ke warna Error (`#C0392B`, Bagian 2.4), tanpa mengubah radius/ukuran.
+- Teks error 11–12px warna sama, muncul tepat di bawah field dengan margin-top 4px.
+- Ikon kecil (!) opsional di kanan input.
+- **Jangan** memakai warna merah untuk apa pun selain error sungguhan — konsisten dengan aturan "Error dipakai sangat jarang" di Bagian 2.4.
+
+**Error State (level halaman/aksi, mis. sertifikat tidak ditemukan):**
+- Toast singkat (bukan full-page error) — background `neutral-800`, teks putih, radius `12px`, muncul dari atas atau bawah tergantung platform, auto-dismiss ±3 detik.
+- Disertai redirect otomatis ke halaman aman terdekat (lihat PRD 5.5 & 15 untuk daftar redirect per skenario).
+
+**Skeleton Loading (tabel Admin, chart, list panjang):**
+- Bentuk skeleton mengikuti bentuk asli konten (baris tabel, card, baris chart) — bukan spinner generik penuh layar.
+- Warna: `neutral-100` sebagai base, animasi shimmer halus ke `neutral-200` (durasi ±1.2s, loop, ease-in-out) — selaras catatan "loading transaksi gold-tone" di Bagian 8, tapi skeleton tabel/list memakai nuansa netral (bukan gold) agar tidak bersaing secara visual dengan elemen brand.
+- Durasi tampil skeleton mengikuti simulasi delay yang relevan (mis. ~800ms untuk submit auth, ~1.2–1.8s untuk transaksi sesuai Bagian 8).
+
+**Toast Konfirmasi Aksi Dummy (Top Up, Withdraw, Unduh Laporan, dsb.):**
+- Style sama dengan toast sukses (background `green-50`, teks `green-700`, ikon check) tapi copy eksplisit menyebut simulasi, mis. "Fitur simulasi — tidak memproses dana sungguhan." Tidak menggunakan warna error/warning untuk ini, karena bukan kegagalan, hanya batasan prototype.
+
+### 11.12 Motion Tambahan
+
+- **Kalkulator:** count-up animation pada 4 angka hasil setiap input berubah (durasi singkat ±300ms, ease-out), agar terasa "hidup" tanpa mengganggu saat user mengetik cepat (debounce ±200ms sebelum animasi jalan).
+- **Toggle periode chart** (24H/7D/1M/1Y, 1B/3B/6B/1T): transisi data chart pakai fade+redraw halus (Recharts default animation, ~300ms), bukan reload instan.
+- **Approve/Reject KYC (Admin):** badge status berubah dengan micro-transition warna (150ms) + toast konfirmasi slide-in dari kanan atas.
 
 ---
 

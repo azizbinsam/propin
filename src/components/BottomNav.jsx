@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Store, TrendingUp, Wallet, User } from 'lucide-react'
+import { Home, Store, Wallet, HandCoins, Settings } from 'lucide-react'
 
 const NAV_ITEMS = [
   { to: '/dashboard', icon: Home, label: 'Beranda' },
   { to: '/marketplace', icon: Store, label: 'Marketplace' },
-  { to: '/investasi', icon: TrendingUp, label: 'Investasi' },
-  { to: '/wallet', icon: Wallet, label: 'Wallet' },
-  { to: '/akun', icon: User, label: 'Akun' },
+  { to: '/wallet', icon: Wallet, label: 'Dompet' },
+  { to: '/zakat', icon: HandCoins, label: 'Zakat' },
+  { to: '/akun', icon: Settings, label: 'Pengaturan' },
 ]
 
 export default function BottomNav() {

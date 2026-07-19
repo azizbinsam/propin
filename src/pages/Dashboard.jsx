@@ -197,7 +197,7 @@ export default function Dashboard() {
   return (
     <div>
       <header className="lg:hidden sticky top-0 z-30 bg-neutral-0 border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
-        <Logo size={26} />
+        <Logo size={120} />
         <button className="text-neutral-500">
           <Bell size={20} />
         </button>

@@ -5,14 +5,14 @@ import Card from '../components/Card'
 import Badge from '../components/Badge'
 import Button from '../components/Button'
 import ProgressBar from '../components/ProgressBar'
-import { useAppData } from '../context/AppContext'
+import { usePortfolio } from '../context/PortfolioContext'
 import { formatRupiah, formatPercent } from '../utils/format'
 
 import zakat from '../data/zakat.json'
 
 export default function AutoZakat() {
   const navigate = useNavigate()
-  const { portfolio } = useAppData()
+  const { portfolio } = usePortfolio()
   const [showHistory, setShowHistory] = useState(false)
 
   const currentAmount = portfolio.totalValue

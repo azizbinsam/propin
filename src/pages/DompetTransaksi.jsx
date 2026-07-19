@@ -191,7 +191,7 @@ export default function DompetTransaksi() {
         <div className="mb-5">
           <div className="flex items-center justify-between mb-3">
             <p className="text-sm font-semibold text-neutral-700">Token Saya</p>
-            <button className="text-xs text-gold-700 font-medium hover:underline">
+            <button onClick={() => navigate('/sertifikat')} className="text-xs text-gold-700 font-medium hover:underline">
               Lihat Semua
             </button>
           </div>
@@ -208,16 +208,24 @@ export default function DompetTransaksi() {
                 const property = activeProperties.find((p) => p.id === holding.propertyId)
                 if (!property) return null
                 return (
-                  <div key={holding.propertyId} className="bg-neutral-0 rounded-xl border border-neutral-200 p-4 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-semibold text-neutral-800">{holding.propertyName}</p>
-                      <p className="text-xs text-neutral-500">{property.location}</p>
-                      <p className="text-xs text-green-600 mt-1">{formatNumber(holding.tokens)} token</p>
+                  <div key={holding.propertyId} className="bg-neutral-0 rounded-xl border border-neutral-200 p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-semibold text-neutral-800">{holding.propertyName}</p>
+                        <p className="text-xs text-neutral-500">{property.location}</p>
+                        <p className="text-xs text-green-600 mt-1">{formatNumber(holding.tokens)} token</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-neutral-800">{formatRupiah(holding.tokens * property.pricePerToken)}</p>
+                        <p className="text-xs text-neutral-400">{formatPercent(property.projectedReturnPercent)} /thn</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-neutral-800">{formatRupiah(holding.tokens * property.pricePerToken)}</p>
-                      <p className="text-xs text-neutral-400">{formatPercent(property.projectedReturnPercent)} /thn</p>
-                    </div>
+                    <button
+                      onClick={() => navigate(`/sertifikat/${holding.propertyId}`)}
+                      className="mt-3 w-full text-xs font-medium text-gold-700 border border-gold-200 bg-gold-50 rounded-lg py-2 hover:bg-gold-100 transition-colors"
+                    >
+                      Lihat Sertifikat NFT
+                    </button>
                   </div>
                 )
               })}

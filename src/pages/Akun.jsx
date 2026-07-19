@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChevronLeft, Camera, Shield, Bell, Moon, FileText, HelpCircle, LogOut, ChevronRight } from 'lucide-react'
+import { ChevronLeft, Camera, Shield, Bell, Moon, FileText, HelpCircle, LogOut, ChevronRight, Award, BarChart3, FileBarChart } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { toast } from '../components/Toast'
 import Button from '../components/Button'
@@ -28,6 +28,14 @@ const MENU_SECTIONS = [
     items: [
       { icon: HelpCircle, label: 'Pusat Bantuan', to: '#' },
       { icon: FileText, label: 'Syarat & Ketentuan', to: '#' },
+    ],
+  },
+  {
+    title: 'Lainnya',
+    items: [
+      { icon: Award, label: 'Sertifikat Kepemilikan (NFT)', to: '/sertifikat' },
+      { icon: BarChart3, label: 'Dampak Investasi', to: '/dampak' },
+      { icon: FileBarChart, label: 'Laporan & Transparansi', to: '/laporan' },
     ],
   },
 ]
@@ -172,7 +180,13 @@ export default function Akun() {
                   <div
                     key={item.label}
                     className="flex items-center gap-3 px-3 py-3 cursor-pointer hover:bg-neutral-50 transition-colors"
-                    onClick={item.action === 'upload' ? handlePhotoClick : undefined}
+                    onClick={
+                      item.action === 'upload'
+                        ? handlePhotoClick
+                        : item.to && item.to !== '#'
+                        ? () => navigate(item.to)
+                        : undefined
+                    }
                   >
                     <item.icon size={18} className="text-neutral-500" />
                     <span className="flex-1 text-sm text-neutral-700">{item.label}</span>

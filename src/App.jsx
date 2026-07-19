@@ -18,7 +18,6 @@ import Dashboard from './pages/Dashboard'
 import Marketplace from './pages/Marketplace'
 import PropertyDetail from './pages/PropertyDetail'
 import DetailTokenisasi from './pages/DetailTokenisasi'
-import Investasi from './pages/Investasi'
 import DompetTransaksi from './pages/DompetTransaksi'
 import DetailTransaksi from './pages/DetailTransaksi'
 import SertifikatList from './pages/SertifikatList'
@@ -63,7 +62,6 @@ function AppRoutes() {
           <Route path="/marketplace" element={<ProtectedRoute><Marketplace /></ProtectedRoute>} />
           <Route path="/marketplace/:propertyId" element={<ProtectedRoute><PropertyDetail /></ProtectedRoute>} />
           <Route path="/tokenisasi/:propertyId" element={<ProtectedRoute><DetailTokenisasi /></ProtectedRoute>} />
-          <Route path="/investasi" element={<ProtectedRoute><Investasi /></ProtectedRoute>} />
           <Route path="/dompet" element={<ProtectedRoute><DompetTransaksi /></ProtectedRoute>} />
           <Route path="/transaksi/:txId" element={<ProtectedRoute><DetailTransaksi /></ProtectedRoute>} />
           <Route path="/sertifikat" element={<ProtectedRoute><SertifikatList /></ProtectedRoute>} />

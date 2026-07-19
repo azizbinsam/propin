@@ -10,7 +10,8 @@
     "minInvestment": 250000,
     "projectedReturnPercent": 12,
     "fundingPercent": 87,
-    "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+    "description": "Apartemen strategis di kawasan BSD City dengan akses langsung ke pusat bisnis dan pendidikan. Unit disewakan penuh kepada penyewa korporat jangka panjang, dikelola oleh mitra properti berpengalaman yang telah tersertifikasi syariah."
   },
   {
     "id": "vila-tanjung",
@@ -23,7 +24,8 @@
     "minInvestment": 500000,
     "projectedReturnPercent": 15,
     "fundingPercent": 62,
-    "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80",
+    "description": "Vila eksklusif tepi pantai di Tanjung Lesung, dioperasikan sebagai penginapan wisata musiman dengan tingkat okupansi tinggi. Cocok untuk investor yang ingin diversifikasi ke sektor pariwisata halal."
   },
   {
     "id": "hotel-jogja",
@@ -36,7 +38,8 @@
     "minInvestment": 250000,
     "projectedReturnPercent": 10,
     "fundingPercent": 95,
-    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    "description": "Hotel syariah di jantung kawasan Malioboro, melayani wisatawan domestik dan mancanegara. Seluruh operasional mengikuti prinsip perhotelan syariah, tanpa alkohol dan dengan fasilitas ibadah lengkap."
   },
   {
     "id": "apartemen-kemang",
@@ -49,7 +52,8 @@
     "minInvestment": 250000,
     "projectedReturnPercent": 11,
     "fundingPercent": 45,
-    "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
+    "description": "Apartemen premium di kawasan Kemang Village, Jakarta Selatan, dengan permintaan sewa tinggi dari ekspatriat dan profesional muda. Dikelola oleh manajemen properti profesional dengan riwayat okupansi stabil."
   },
   {
     "id": "vila-puncak",
@@ -62,7 +66,8 @@
     "minInvestment": 250000,
     "projectedReturnPercent": 14,
     "fundingPercent": 30,
-    "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    "description": "Vila keluarga di kawasan Puncak, Bogor, populer sebagai destinasi akhir pekan warga Jakarta. Pendapatan sewa musiman dengan puncak permintaan di libur panjang dan akhir tahun."
   },
   {
     "id": "hotel-bandung",
@@ -75,6 +80,7 @@
     "minInvestment": 250000,
     "projectedReturnPercent": 9,
     "fundingPercent": 78,
-    "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+    "description": "Hotel butik syariah di kawasan Dago, Bandung, menyasar segmen wisatawan keluarga dan rombongan pengajian/kajian. Tingkat hunian stabil sepanjang tahun berkat lokasi dekat pusat kota."
   }
 ]

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Bell, TrendingUp, Store, Wallet, FileText } from 'lucide-react'
+import { Bell, Store, Wallet, FileText } from 'lucide-react'
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
@@ -9,7 +9,6 @@ import { formatRupiah, formatPercent, formatNumber } from '../utils/format'
 import user from '../data/user.json'
 
 const QUICK_MENU = [
-  { icon: TrendingUp, label: 'Investasi', to: '/investasi' },
   { icon: Store, label: 'Marketplace', to: '/marketplace' },
   { icon: Wallet, label: 'Dompet', to: '/dompet' },
   { icon: FileText, label: 'Laporan', to: '/laporan' },

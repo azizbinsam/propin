@@ -85,11 +85,17 @@ export default function DetailTokenisasi() {
           <ChevronLeft size={16} /> Kembali
         </button>
 
-        <div className={`relative h-44 rounded-card bg-gradient-to-br ${CATEGORY_GRADIENT[property.category]} flex items-end p-4`}>
+        <div className="relative h-44 rounded-card overflow-hidden flex items-end p-4">
+          {property.image ? (
+            <img src={property.image} alt={property.name} className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <div className={`absolute inset-0 bg-gradient-to-br ${CATEGORY_GRADIENT[property.category]}`} />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           <Badge variant="success" withCheck className="absolute top-3 right-3 !bg-white/90">
             Verified Syariah
           </Badge>
-          <span className="text-white font-semibold capitalize">{property.category}</span>
+          <span className="relative text-white font-semibold capitalize">{property.category}</span>
         </div>
 
         <h2 className="text-lg font-bold text-neutral-800 mt-4">{property.name}</h2>

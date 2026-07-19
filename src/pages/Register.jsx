@@ -4,6 +4,7 @@ import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { toast } from '../components/Toast'
 import Button from '../components/Button'
+import Logo from '../components/Logo'
 
 function isValidEmail(email) {
   const trimmed = email.trim()
@@ -83,25 +84,11 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-4 py-8">
-      <div className="hidden lg:flex lg:w-2/5 min-h-screen bg-gradient-to-br from-gold-500 to-gold-800 items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-64 h-64 rounded-full border border-white/30" />
-          <div className="absolute bottom-20 right-20 w-48 h-48 rounded-full border border-white/20" />
-        </div>
-        <div className="relative z-10 text-center text-white px-8">
-          <h1 className="font-serif text-4xl font-bold mb-4">PROPIN</h1>
-          <p className="text-lg opacity-90 mb-2">Satu Token, Satu Kepemilikan</p>
-          <p className="text-sm opacity-70 max-w-xs mx-auto">
-            Bergabunglah dengan ribuan investor syariah di Indonesia
-          </p>
-        </div>
-      </div>
 
-      <div className="w-full max-w-md mx-auto lg:mx-0 lg:w-3/5 lg:px-16">
-        <div className="lg:hidden text-center mb-8">
-          <h1 className="font-serif text-2xl font-bold text-gold-700">PROPIN</h1>
-          <p className="text-xs text-neutral-400 mt-1">Satu Token, Satu Kepemilikan</p>
-        </div>
+      <div className="w-full max-w-xl mx-auto lg:mx-0 lg:w-3/5 lg:px-16">
+        <div className='mb-8 flex justify-center'>
+                <Logo size={180} />
+                </div>
 
         <div className="bg-neutral-0 rounded-2xl border border-neutral-200 shadow-sm p-6 lg:p-8">
           <h2 className="text-xl font-bold text-neutral-800 mb-1">Daftar</h2>

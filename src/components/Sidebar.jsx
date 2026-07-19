@@ -3,6 +3,7 @@ import {
   LayoutDashboard, Store, Wallet, HandCoins, Settings,
   Bot, Leaf, FileBarChart,
 } from 'lucide-react'
+import Logo from './Logo'
 
 const NAV_ITEMS = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -31,8 +32,7 @@ export default function Sidebar() {
   return (
     <aside className="w-60 shrink-0 bg-neutral-0 border-r border-neutral-200 flex flex-col h-screen sticky top-0">
       <div className="px-5 py-5 border-b border-neutral-200">
-        <span className="font-serif text-xl font-bold text-gold-700">PROPIN</span>
-        <p className="text-[11px] text-neutral-400 mt-0.5">Satu Token, Satu Kepemilikan</p>
+        <Logo size={180} />
       </div>
       <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
         {NAV_ITEMS.map((item) => (

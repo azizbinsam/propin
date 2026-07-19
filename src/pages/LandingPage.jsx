@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Shield, TrendingUp, Users, Building2, Star, MapPin } from 'lucide-react'
+import Logo from '../components/Logo'
 
 // ============ KALKULATOR COMPONENT ============
 function KalkulatorSection() {
@@ -548,7 +549,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <span className="font-serif text-2xl font-bold text-gold-400">PROPIN</span>
+              <Logo size={180} />
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold-900 text-gold-300 border border-gold-700">Prototype</span>
             </div>
             <p className="text-sm leading-relaxed max-w-sm">
@@ -600,7 +601,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <span className="font-serif text-xl font-bold text-gold-700">PROPIN</span>
+              <Logo size={140} />
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a href="#fitur" className="text-sm text-neutral-600 hover:text-gold-700 transition-colors">Fitur</a>

@@ -1,5 +1,6 @@
 import { NavLink, useLocation, Outlet } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import Logo from '../components/Logo'
 
 const ADMIN_NAV = [
   { to: '/admin/dashboard', label: 'Dashboard Admin', icon: 'LayoutDashboard' },
@@ -41,7 +42,7 @@ export default function AdminLayout() {
       <aside className="w-60 shrink-0 bg-neutral-0 border-r border-neutral-200 flex flex-col h-screen sticky top-0">
         <div className="px-5 py-5 border-b border-neutral-200">
           <div className="flex items-center gap-2">
-            <span className="font-serif text-xl font-bold text-gold-700">PROPIN</span>
+            <Logo size={28} />
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold-100 text-gold-800 font-medium">
               Admin
             </span>
@@ -87,10 +88,9 @@ export default function AdminLayout() {
         <header className="h-16 bg-neutral-0 border-b border-neutral-200 px-6 flex items-center justify-between sticky top-0 z-20">
           <h1 className="text-lg font-bold text-neutral-800">Admin Panel</h1>
           <div className="flex items-center gap-3">
-            <a
-              href="/dashboard"
-              className="text-xs px-3 py-1.5 rounded-lg bg-gold-50 text-gold-700 border border-gold-200 hover:bg-gold-100 transition-colors"
-            >
+            
+              <a href="/dashboard"
+              className="text-xs px-3 py-1.5 rounded-lg bg-gold-50 text-gold-700 border border-gold-200 hover:bg-gold-100 transition-colors">
               Lihat Tampilan User
             </a>
           </div>

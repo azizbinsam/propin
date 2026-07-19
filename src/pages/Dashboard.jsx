@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom'
-import { Bell, Store, Wallet, FileText } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Bell, Store, Wallet, FileText, HandCoins, ArrowDownLeft, ArrowUpRight, ArrowRight, MapPin } from 'lucide-react'
 import { LineChart, Line, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import Card from '../components/Card'
 import Badge from '../components/Badge'
+import Logo from '../components/Logo'
 import { usePortfolio } from '../context/PortfolioContext'
+import { useProperties } from '../context/PropertiesContext'
 import { formatRupiah, formatPercent, formatNumber } from '../utils/format'
 
 import user from '../data/user.json'
@@ -11,8 +13,35 @@ import user from '../data/user.json'
 const QUICK_MENU = [
   { icon: Store, label: 'Marketplace', to: '/marketplace' },
   { icon: Wallet, label: 'Dompet', to: '/dompet' },
+  { icon: HandCoins, label: 'Auto-Zakat', to: '/zakat' },
   { icon: FileText, label: 'Laporan', to: '/laporan' },
 ]
+
+const TX_ICONS = {
+  'Beli Token': { icon: ArrowDownLeft, bg: 'bg-green-50', color: 'text-green-600' },
+  'Distribusi Sewa': { icon: ArrowDownLeft, bg: 'bg-green-50', color: 'text-green-600' },
+  'Top Up': { icon: ArrowDownLeft, bg: 'bg-green-50', color: 'text-green-600' },
+  'Zakat': { icon: ArrowUpRight, bg: 'bg-gold-50', color: 'text-gold-700' },
+  'Withdraw': { icon: ArrowUpRight, bg: 'bg-gold-50', color: 'text-gold-700' },
+}
+
+function getTxIcon(type) {
+  return TX_ICONS[type] || TX_ICONS['Beli Token']
+}
+
+function StatPill({ label, value, tone = 'default' }) {
+  const toneStyles = {
+    default: 'text-neutral-800',
+    positive: 'text-green-600',
+    gold: 'text-gold-700',
+  }
+  return (
+    <div className="bg-neutral-0 rounded-xl border border-neutral-200 px-4 py-3">
+      <p className="text-[11px] text-neutral-500">{label}</p>
+      <p className={`text-base font-bold mt-0.5 ${toneStyles[tone]}`}>{value}</p>
+    </div>
+  )
+}
 
 function PortfolioCard({ portfolio }) {
   return (
@@ -38,29 +67,8 @@ function QuickMenuCard() {
             <div className="w-10 h-10 rounded-full bg-gold-50 flex items-center justify-center">
               <Icon size={18} className="text-gold-600" />
             </div>
-            <span className="text-[11px] font-medium text-neutral-600">{label}</span>
+            <span className="text-[11px] font-medium text-neutral-600 text-center">{label}</span>
           </Link>
-        ))}
-      </div>
-    </Card>
-  )
-}
-
-function RingkasanAsetCard({ portfolio }) {
-  const stats = [
-    { label: 'Properti', value: formatNumber(portfolio.totalProperties) },
-    { label: 'Token Dimiliki', value: formatNumber(portfolio.totalTokens) },
-    { label: 'Rata-rata Return', value: formatPercent(portfolio.averageReturnPercent) },
-  ]
-  return (
-    <Card variant="flat">
-      <p className="text-sm font-semibold text-neutral-700 mb-3">Ringkasan Aset</p>
-      <div className="grid grid-cols-3 gap-2">
-        {stats.map(({ label, value }) => (
-          <div key={label} className="bg-neutral-0 rounded-xl border border-neutral-200 px-2 py-3 text-center">
-            <p className="text-sm font-bold text-neutral-800">{value}</p>
-            <p className="text-[10px] text-neutral-500 mt-0.5">{label}</p>
-          </div>
         ))}
       </div>
     </Card>
@@ -74,7 +82,7 @@ function ChartCard({ portfolio }) {
         <p className="text-sm font-semibold text-neutral-700">Kinerja Portofolio</p>
         <Badge variant="success">+{formatPercent(portfolio.totalReturnPercent)}</Badge>
       </div>
-      <ResponsiveContainer width="100%" height={180}>
+      <ResponsiveContainer width="100%" height={220}>
         <LineChart data={portfolio.performanceHistory} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
           <XAxis
             dataKey="month"
@@ -100,21 +108,102 @@ function ChartCard({ portfolio }) {
   )
 }
 
+function RecentTransactionsCard({ transactions, navigate }) {
+  return (
+    <Card variant="default">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-sm font-semibold text-neutral-700">Transaksi Terbaru</p>
+        <Link to="/dompet" className="text-xs text-gold-700 font-medium hover:underline flex items-center gap-1">
+          Lihat Semua <ArrowRight size={12} />
+        </Link>
+      </div>
+      {transactions.length === 0 ? (
+        <p className="text-sm text-neutral-500 text-center py-6">Belum ada transaksi</p>
+      ) : (
+        <div className="space-y-2">
+          {transactions.slice(0, 4).map((tx) => {
+            const { icon: Icon, bg, color } = getTxIcon(tx.type || 'Beli Token')
+            return (
+              <button
+                key={tx.id}
+                onClick={() => navigate(`/transaksi/${tx.id}`)}
+                className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors text-left"
+              >
+                <div className={`w-9 h-9 rounded-full ${bg} flex items-center justify-center shrink-0`}>
+                  <Icon size={16} className={color} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-neutral-800 truncate">{tx.type || 'Beli Token'}</p>
+                  <p className="text-xs text-neutral-500 truncate">{tx.propertyName || 'PROPIN'}</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-sm font-bold text-neutral-800">{formatRupiah(tx.nominal)}</p>
+                  <p className="text-[10px] text-neutral-400">
+                    {new Date(tx.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                  </p>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </Card>
+  )
+}
+
+function FeaturedPropertiesCard({ properties, navigate }) {
+  return (
+    <Card variant="default">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-sm font-semibold text-neutral-700">Properti Pilihan</p>
+        <Link to="/marketplace" className="text-xs text-gold-700 font-medium hover:underline flex items-center gap-1">
+          Lihat Semua <ArrowRight size={12} />
+        </Link>
+      </div>
+      <div className="space-y-2">
+        {properties.slice(0, 3).map((property) => (
+          <button
+            key={property.id}
+            onClick={() => navigate(`/tokenisasi/${property.id}`)}
+            className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-neutral-50 transition-colors text-left"
+          >
+            <img
+              src={property.image}
+              alt=""
+              className="w-12 h-12 rounded-lg object-cover shrink-0 bg-neutral-100"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-neutral-800 truncate">{property.name}</p>
+              <p className="text-xs text-neutral-500 flex items-center gap-1 truncate">
+                <MapPin size={11} className="shrink-0" /> {property.location}
+              </p>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="text-xs font-semibold text-green-600">{formatPercent(property.projectedReturnPercent)}/thn</p>
+              <p className="text-[10px] text-neutral-400">{property.fundingPercent}% terdanai</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </Card>
+  )
+}
+
 export default function Dashboard() {
-  const { portfolio } = usePortfolio()
+  const navigate = useNavigate()
+  const { portfolio, transactions } = usePortfolio()
+  const { activeProperties } = useProperties()
 
   return (
     <div>
       <header className="lg:hidden sticky top-0 z-30 bg-neutral-0 border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
-        <div>
-          <span className="font-serif text-lg font-bold text-gold-700">PROPIN</span>
-        </div>
+        <Logo size={26} />
         <button className="text-neutral-500">
           <Bell size={20} />
         </button>
       </header>
 
-      <div className="p-4 lg:p-0">
+      <div className="p-4 lg:p-0 lg:max-w-none">
         <p className="text-sm text-neutral-500 lg:hidden mb-4">
           {user.greeting}, Selamat datang kembali!
         </p>
@@ -122,18 +211,26 @@ export default function Dashboard() {
           {user.greeting}, {user.name}
         </h1>
 
+        {/* Top stat row — desktop only, gives the dashboard more substance at a glance */}
+        <div className="hidden lg:grid lg:grid-cols-4 lg:gap-4 mb-6">
+          <StatPill label="Total Properti" value={formatNumber(portfolio.totalProperties)} />
+          <StatPill label="Token Dimiliki" value={formatNumber(portfolio.totalTokens)} />
+          <StatPill label="Rata-rata Return" value={formatPercent(portfolio.averageReturnPercent)} tone="positive" />
+          <StatPill label="Total Return" value={formatRupiah(portfolio.totalReturn)} tone="gold" />
+        </div>
+
         <div className="space-y-5 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
-          <div className="lg:col-span-2 lg:order-1">
+          {/* Left/main column */}
+          <div className="lg:col-span-2 space-y-5 lg:space-y-6">
             <PortfolioCard portfolio={portfolio} />
-          </div>
-
-          <div className="lg:order-2 space-y-5">
-            <QuickMenuCard />
-            <RingkasanAsetCard portfolio={portfolio} />
-          </div>
-
-          <div className="lg:col-span-2 lg:order-3">
             <ChartCard portfolio={portfolio} />
+            <RecentTransactionsCard transactions={transactions} navigate={navigate} />
+          </div>
+
+          {/* Right column */}
+          <div className="space-y-5 lg:space-y-6">
+            <QuickMenuCard />
+            <FeaturedPropertiesCard properties={activeProperties} navigate={navigate} />
           </div>
         </div>
       </div>

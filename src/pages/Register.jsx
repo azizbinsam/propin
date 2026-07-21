@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { toast } from '../components/Toast'
@@ -34,8 +34,7 @@ export default function Register() {
 
   if (isAuthenticated && user) {
     const redirectTo = user.role === 'admin' ? '/admin/dashboard' : '/dashboard'
-    navigate(redirectTo, { replace: true })
-    return null
+    return <Navigate to={redirectTo} replace />
   }
 
   function validate() {

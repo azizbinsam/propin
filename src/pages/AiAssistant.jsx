@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, Send, Bot, User, Play, BookOpen } from 'lucide-react'
 import { toast } from '../components/Toast'
 import Card from '../components/Card'
-import { getMockResponse } from '../utils/aiResponses'
+import { getMockResponse, SUGGESTIONS } from '../utils/aiResponses'
 
 const VIDEO_LIBRARY = [
   { id: 1, title: 'Pengenalan Tokenisasi Properti', duration: '4:32', category: 'Dasar' },
@@ -11,13 +11,6 @@ const VIDEO_LIBRARY = [
   { id: 3, title: 'Memahami Smart Contract', duration: '5:48', category: 'Teknis' },
   { id: 4, title: 'Auto-Zakat: Cara Kerja', duration: '3:20', category: 'Syariah' },
   { id: 5, title: 'Strategi Diversifikasi', duration: '7:10', category: 'Investasi' },
-]
-
-const SUGGESTIONS = [
-  'Bagaimana cara membeli token?',
-  'Apa itu smart contract?',
-  'Bagaimana perhitungan zakat?',
-  'Risiko investasi apa saja?',
 ]
 
 export default function AiAssistant() {
@@ -34,22 +27,27 @@ export default function AiAssistant() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  function handleSend() {
-    if (!input.trim()) return
-    const userMsg = { id: Date.now(), role: 'user', text: input.trim() }
+  function sendMessage(text) {
+    const trimmed = text.trim()
+    if (!trimmed) return
+    const userMsg = { id: Date.now(), role: 'user', text: trimmed }
     setMessages((prev) => [...prev, userMsg])
     setInput('')
     setTyping(true)
 
     setTimeout(() => {
-      const response = getMockResponse(userMsg.text)
+      const response = getMockResponse(trimmed)
       setMessages((prev) => [...prev, { id: Date.now() + 1, role: 'assistant', text: response }])
       setTyping(false)
     }, 800 + Math.random() * 600)
   }
 
+  function handleSend() {
+    sendMessage(input)
+  }
+
   function handleSuggestion(text) {
-    setInput(text)
+    sendMessage(text)
   }
 
   function handleVideoClick(video) {

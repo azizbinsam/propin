@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Bot, X, Send, Maximize2, Sparkles } from 'lucide-react'
-import { getMockResponse } from '../utils/aiResponses'
+import { getMockResponse, SUGGESTIONS } from '../utils/aiResponses'
 
 const INITIAL_MESSAGE = {
   id: 1,
@@ -39,18 +39,27 @@ export default function FloatingAiAssistant() {
   // Sembunyikan tombol di halaman AI Assistant penuh — di sana chat sudah ada di layar
   if (location.pathname.startsWith('/ai-assistant')) return null
 
-  function handleSend() {
-    if (!input.trim()) return
-    const userMsg = { id: Date.now(), role: 'user', text: input.trim() }
+  function sendMessage(text) {
+    const trimmed = text.trim()
+    if (!trimmed) return
+    const userMsg = { id: Date.now(), role: 'user', text: trimmed }
     setMessages((prev) => [...prev, userMsg])
     setInput('')
     setTyping(true)
 
     setTimeout(() => {
-      const response = getMockResponse(userMsg.text)
+      const response = getMockResponse(trimmed)
       setMessages((prev) => [...prev, { id: Date.now() + 1, role: 'assistant', text: response }])
       setTyping(false)
     }, 700 + Math.random() * 500)
+  }
+
+  function handleSend() {
+    sendMessage(input)
+  }
+
+  function handleSuggestion(text) {
+    sendMessage(text)
   }
 
   function handleOpenFullPage() {
@@ -208,6 +217,21 @@ export default function FloatingAiAssistant() {
             )}
             <div ref={bottomRef} />
           </div>
+
+          {/* Suggestions — hanya tampil sebelum user mengirim pesan pertama */}
+          {messages.length <= 1 && (
+            <div className="px-3 pb-2 flex gap-1.5 overflow-x-auto scrollbar-hide">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => handleSuggestion(s)}
+                  className="shrink-0 px-2.5 py-1 rounded-full bg-gold-50 text-gold-700 text-[11px] font-medium border border-gold-200 hover:bg-gold-100 transition-colors"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Input */}
           <div className="p-3 border-t border-neutral-200">

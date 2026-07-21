@@ -1,3 +1,10 @@
+export const SUGGESTIONS = [
+  'Bagaimana cara membeli token?',
+  'Apa itu smart contract?',
+  'Bagaimana perhitungan zakat?',
+  'Risiko investasi apa saja?',
+]
+
 export const MOCK_RESPONSES = {
   'token': 'Tokenisasi properti adalah pembagian kepemilikan properti menjadi unit-unit digital (token) yang dapat dibeli oleh banyak investor. Setiap token mewakili bagian kepemilikan properti tersebut.',
   'beli': 'Untuk membeli token: 1) Pilih properti di Marketplace, 2) Klik "Beli Token", 3) Masukkan nominal investasi, 4) Konfirmasi pembelian. Minimum investasi bervariasi per properti.',

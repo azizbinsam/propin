@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Shield, TrendingUp, Users, Building2, Star, MapPin } from 'lucide-react'
 import Logo from '../components/Logo'
+import FloatingAiAssistant from '../components/FloatingAiAssistant'
 
 // ============ KALKULATOR COMPONENT ============
 function KalkulatorSection() {
@@ -175,7 +176,7 @@ function HeroSection() {
           </h1>
 
           <p className="mt-6 text-lg text-white/70 leading-relaxed max-w-xl">
-            Investasi properti syariah mulai dari Rp 25.000. Terdaftar & diawasi OJK. 
+            Investasi properti syariah mulai dari Rp 10.000. Terdaftar & diawasi OJK. 
             Kepemilikan transparan berbasis smart contract.
           </p>
 
@@ -243,7 +244,7 @@ function FeaturesSection() {
     {
       icon: Users,
       title: 'Akses untuk Semua',
-      desc: 'Mulai investasi dari Rp 25.000. Tidak ada minimum saldo. Fleksibel top-up kapan saja.',
+      desc: 'Mulai investasi dari Rp 10.000. Tidak ada minimum saldo. Fleksibel top-up kapan saja.',
       color: 'bg-blue-50 text-blue-600',
     },
     {
@@ -293,7 +294,7 @@ function PropertiesPreview() {
       image: '/images/hero-apartment.jpg',
       name: 'Apartemen BSD Syariah',
       location: 'Tangerang Selatan',
-      price: 'Rp 25.000',
+      price: 'Rp 10.000',
       return: '12%',
       type: 'Apartemen',
       funded: 87,
@@ -302,7 +303,7 @@ function PropertiesPreview() {
       image: '/images/hero-villa.jpg',
       name: 'Vila Tanjung Lesung',
       location: 'Banten',
-      price: 'Rp 50.000',
+      price: 'Rp 10.000',
       return: '15%',
       type: 'Vila',
       funded: 62,
@@ -311,7 +312,7 @@ function PropertiesPreview() {
       image: '/images/hero-hotel.jpg',
       name: 'Hotel Malioboro Syariah',
       location: 'Yogyakarta',
-      price: 'Rp 25.000',
+      price: 'Rp 10.000',
       return: '10%',
       type: 'Hotel',
       funded: 95,
@@ -412,7 +413,7 @@ function HowItWorks() {
   const steps = [
     { num: '01', title: 'Daftar & Verifikasi', desc: 'Buat akun gratis dan verifikasi KYC dalam 5 menit' },
     { num: '02', title: 'Pilih Properti', desc: 'Jelajahi marketplace dan pilih properti syariah favorit' },
-    { num: '03', title: 'Beli Token', desc: 'Investasi mulai dari Rp 25.000 per token' },
+    { num: '03', title: 'Beli Token', desc: 'Investasi mulai dari Rp 10.000 per token' },
     { num: '04', title: 'Terima Return', desc: 'Dapatkan distribusi sewa setiap bulan otomatis' },
   ]
 
@@ -549,7 +550,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <Logo size={180} />
+              <a href="/"><Logo size={180} /></a>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold-900 text-gold-300 border border-gold-700">Prototype</span>
             </div>
             <p className="text-sm leading-relaxed max-w-sm">
@@ -645,6 +646,7 @@ export default function LandingPage() {
       <Testimonials />
       <CTASection />
       <Footer />
+      <FloatingAiAssistant />
     </div>
   )
 }

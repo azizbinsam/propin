@@ -90,12 +90,12 @@ export default function DompetTransaksi() {
         <h1 className="font-bold text-neutral-800">Dompet & Transaksi</h1>
       </header>
 
-      <div className="p-4 lg:p-0 max-w-3xl">
+      <div className="p-4 lg:p-0">
         <h1 className="hidden lg:block text-xl font-bold text-neutral-800 mb-6">Dompet & Transaksi</h1>
 
         {/* Ringkasan Saldo */}
-        <div className="grid grid-cols-2 gap-3 mb-5">
-          <Card variant="gold">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+          <Card variant="gold" className="lg:col-span-2">
             <p className="text-xs opacity-90">Total Asset</p>
             <p className="text-xl font-bold mt-1">{formatRupiah(portfolio.totalValue)}</p>
             <p className="text-xs opacity-75 mt-1">~${formatNumber(portfolio.totalValue / 16000)}</p>
@@ -108,7 +108,7 @@ export default function DompetTransaksi() {
               </span>
             </button>
           </Card>
-          <Card variant="default">
+          <Card variant="default" className="lg:col-span-2">
             <p className="text-xs text-neutral-500">Saldo Tersedia</p>
             <p className="text-xl font-bold text-neutral-800 mt-1">{formatRupiah(saldoTersedia)}</p>
             <p className="text-xs text-neutral-400 mt-1">Terakhir diperbarui: Hari ini</p>
@@ -143,148 +143,153 @@ export default function DompetTransaksi() {
           </div>
         </div>
 
-        {/* Grafik Pertumbuhan Saldo */}
-        <Card variant="default" className="mb-5">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold text-neutral-700">Pertumbuhan Saldo</p>
-            <div className="flex gap-1">
-              {PERIODES.map(({ key, label }) => (
-                <button
-                  key={key}
-                  onClick={() => setPeriode(key)}
-                  className={`px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${
-                    periode === key
-                      ? 'bg-gold-600 text-white'
-                      : 'bg-neutral-100 text-neutral-500 hover:bg-neutral-200'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart data={saldoData[periode]} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
-              <XAxis dataKey="label" tick={{ fontSize: 10, fill: '#9C9587' }} axisLine={false} tickLine={false} />
-              <Tooltip
-                formatter={(value) => [formatRupiah(value), 'Saldo']}
-                contentStyle={{ borderRadius: 12, borderColor: '#E4E0D6', fontSize: 12 }}
-              />
-              <Area
-                type="monotone"
-                dataKey="value"
-                stroke="#B08A2E"
-                strokeWidth={2}
-                fill="url(#goldGradient)"
-              />
-              <defs>
-                <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#B08A2E" stopOpacity={0.2} />
-                  <stop offset="100%" stopColor="#B08A2E" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-            </AreaChart>
-          </ResponsiveContainer>
-        </Card>
-
-        {/* Token Saya */}
-        <div className="mb-5">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold text-neutral-700">Token Saya</p>
-            <button onClick={() => navigate('/sertifikat')} className="text-xs text-gold-700 font-medium hover:underline">
-              Lihat Semua
-            </button>
-          </div>
-          {holdings.length === 0 ? (
-            <div className="text-center py-8 bg-neutral-0 rounded-xl border border-neutral-200">
-              <p className="text-sm text-neutral-500">Belum ada token dimiliki</p>
-              <Button variant="outline" className="mt-3" onClick={() => navigate('/marketplace')}>
-                Mulai Investasi
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {holdings.map((holding) => {
-                const property = activeProperties.find((p) => p.id === holding.propertyId)
-                if (!property) return null
-                return (
-                  <div key={holding.propertyId} className="bg-neutral-0 rounded-xl border border-neutral-200 p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-semibold text-neutral-800">{holding.propertyName}</p>
-                        <p className="text-xs text-neutral-500">{property.location}</p>
-                        <p className="text-xs text-green-600 mt-1">{formatNumber(holding.tokens)} token</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-bold text-neutral-800">{formatRupiah(holding.tokens * property.pricePerToken)}</p>
-                        <p className="text-xs text-neutral-400">{formatPercent(property.projectedReturnPercent)} /thn</p>
-                      </div>
-                    </div>
+        {/* Main content: chart + token di kiri (lebih lebar), riwayat transaksi di kanan pada desktop */}
+        <div className="lg:grid lg:grid-cols-3 lg:gap-6">
+          <div className="lg:col-span-2 space-y-5">
+            {/* Grafik Pertumbuhan Saldo */}
+            <Card variant="default">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-neutral-700">Pertumbuhan Saldo</p>
+                <div className="flex gap-1">
+                  {PERIODES.map(({ key, label }) => (
                     <button
-                      onClick={() => navigate(`/sertifikat/${holding.propertyId}`)}
-                      className="mt-3 w-full text-xs font-medium text-gold-700 border border-gold-200 bg-gold-50 rounded-lg py-2 hover:bg-gold-100 transition-colors"
+                      key={key}
+                      onClick={() => setPeriode(key)}
+                      className={`px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${
+                        periode === key
+                          ? 'bg-gold-600 text-white'
+                          : 'bg-neutral-100 text-neutral-500 hover:bg-neutral-200'
+                      }`}
                     >
-                      Lihat Sertifikat NFT
+                      {label}
                     </button>
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </div>
+                  ))}
+                </div>
+              </div>
+              <ResponsiveContainer width="100%" height={240}>
+                <AreaChart data={saldoData[periode]} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
+                  <XAxis dataKey="label" tick={{ fontSize: 10, fill: '#9C9587' }} axisLine={false} tickLine={false} />
+                  <Tooltip
+                    formatter={(value) => [formatRupiah(value), 'Saldo']}
+                    contentStyle={{ borderRadius: 12, borderColor: '#E4E0D6', fontSize: 12 }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#B08A2E"
+                    strokeWidth={2}
+                    fill="url(#goldGradient)"
+                  />
+                  <defs>
+                    <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#B08A2E" stopOpacity={0.2} />
+                      <stop offset="100%" stopColor="#B08A2E" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                </AreaChart>
+              </ResponsiveContainer>
+            </Card>
 
-        {/* Riwayat Transaksi */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold text-neutral-700">Riwayat Transaksi</p>
-            <div className="flex gap-1">
-              {PERIODES.map(({ key, label }) => (
-                <button
-                  key={key}
-                  className={`px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${
-                    key === '1M'
-                      ? 'bg-gold-600 text-white'
-                      : 'bg-neutral-100 text-neutral-500 hover:bg-neutral-200'
-                  }`}
-                >
-                  {label}
+            {/* Token Saya */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-neutral-700">Token Saya</p>
+                <button onClick={() => navigate('/sertifikat')} className="text-xs text-gold-700 font-medium hover:underline">
+                  Lihat Semua
                 </button>
-              ))}
+              </div>
+              {holdings.length === 0 ? (
+                <div className="text-center py-8 bg-neutral-0 rounded-xl border border-neutral-200">
+                  <p className="text-sm text-neutral-500">Belum ada token dimiliki</p>
+                  <Button variant="outline" className="mt-3" onClick={() => navigate('/marketplace')}>
+                    Mulai Investasi
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid gap-3 lg:grid-cols-2">
+                  {holdings.map((holding) => {
+                    const property = activeProperties.find((p) => p.id === holding.propertyId)
+                    if (!property) return null
+                    return (
+                      <div key={holding.propertyId} className="bg-neutral-0 rounded-xl border border-neutral-200 p-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-semibold text-neutral-800">{holding.propertyName}</p>
+                            <p className="text-xs text-neutral-500">{property.location}</p>
+                            <p className="text-xs text-green-600 mt-1">{formatNumber(holding.tokens)} token</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-neutral-800">{formatRupiah(holding.tokens * property.pricePerToken)}</p>
+                            <p className="text-xs text-neutral-400">{formatPercent(property.projectedReturnPercent)} /thn</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => navigate(`/sertifikat/${holding.propertyId}`)}
+                          className="mt-3 w-full text-xs font-medium text-gold-700 border border-gold-200 bg-gold-50 rounded-lg py-2 hover:bg-gold-100 transition-colors"
+                        >
+                          Lihat Sertifikat NFT
+                        </button>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           </div>
 
-          {transactions.length === 0 ? (
-            <div className="text-center py-8 bg-neutral-0 rounded-xl border border-neutral-200">
-              <p className="text-sm text-neutral-500">Belum ada transaksi</p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {transactions.slice(0, 10).map((tx) => {
-                const { icon: Icon, bg, color } = getTxIcon(tx.type || 'Beli Token')
-                return (
+          {/* Riwayat Transaksi */}
+          <div className="mt-5 lg:mt-0">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-neutral-700">Riwayat Transaksi</p>
+              <div className="flex gap-1">
+                {PERIODES.map(({ key, label }) => (
                   <button
-                    key={tx.id}
-                    onClick={() => navigate(`/transaksi/${tx.id}`)}
-                    className="w-full bg-neutral-0 rounded-xl border border-neutral-200 p-3 flex items-center gap-3 hover:bg-neutral-50 transition-colors text-left"
+                    key={key}
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${
+                      key === '1M'
+                        ? 'bg-gold-600 text-white'
+                        : 'bg-neutral-100 text-neutral-500 hover:bg-neutral-200'
+                    }`}
                   >
-                    <div className={`w-10 h-10 rounded-full ${bg} flex items-center justify-center shrink-0`}>
-                      <Icon size={18} className={color} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-neutral-800 truncate">{tx.type || 'Beli Token'}</p>
-                      <p className="text-xs text-neutral-500 truncate">{tx.propertyName || 'PROPIN'}</p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-sm font-bold text-neutral-800">{formatRupiah(tx.nominal)}</p>
-                      <p className="text-[10px] text-neutral-400">
-                        {new Date(tx.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
-                      </p>
-                    </div>
+                    {label}
                   </button>
-                )
-              })}
+                ))}
+              </div>
             </div>
-          )}
+
+            {transactions.length === 0 ? (
+              <div className="text-center py-8 bg-neutral-0 rounded-xl border border-neutral-200">
+                <p className="text-sm text-neutral-500">Belum ada transaksi</p>
+              </div>
+            ) : (
+              <div className="space-y-2 lg:max-h-[560px] lg:overflow-y-auto lg:pr-1">
+                {transactions.slice(0, 10).map((tx) => {
+                  const { icon: Icon, bg, color } = getTxIcon(tx.type || 'Beli Token')
+                  return (
+                    <button
+                      key={tx.id}
+                      onClick={() => navigate(`/transaksi/${tx.id}`)}
+                      className="w-full bg-neutral-0 rounded-xl border border-neutral-200 p-3 flex items-center gap-3 hover:bg-neutral-50 transition-colors text-left"
+                    >
+                      <div className={`w-10 h-10 rounded-full ${bg} flex items-center justify-center shrink-0`}>
+                        <Icon size={18} className={color} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-neutral-800 truncate">{tx.type || 'Beli Token'}</p>
+                        <p className="text-xs text-neutral-500 truncate">{tx.propertyName || 'PROPIN'}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className="text-sm font-bold text-neutral-800">{formatRupiah(tx.nominal)}</p>
+                        <p className="text-[10px] text-neutral-400">
+                          {new Date(tx.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                        </p>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

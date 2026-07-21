@@ -28,15 +28,15 @@ export default function Dampak() {
         <h1 className="font-bold text-neutral-800">Dampak Sosial</h1>
       </header>
 
-      <div className="p-4 lg:p-0 max-w-2xl">
+      <div className="p-4 lg:p-0">
         <h1 className="hidden lg:block text-xl font-bold text-neutral-800 mb-6">Dampak Sosial</h1>
 
-        <p className="text-sm text-neutral-600 mb-6">
+        <p className="text-sm text-neutral-600 mb-6 lg:max-w-2xl">
           PROPIN berkomitmen menciptakan dampak positif melalui tokenisasi properti syariah yang inklusif dan berkelanjutan.
         </p>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           {IMPACT_STATS.map(({ icon: Icon, label, value, unit }) => (
             <Card key={label} variant="default" className="text-center py-5">
               <Icon size={24} className="text-gold-600 mx-auto mb-2" />
@@ -47,38 +47,44 @@ export default function Dampak() {
           ))}
         </div>
 
-        {/* SDG Alignment */}
-        <h2 className="text-sm font-bold text-neutral-800 mb-3">Kontribusi SDG</h2>
-        <div className="space-y-2 mb-6">
-          {SDG_ITEMS.map(({ number, title, desc }) => (
-            <Card key={number} variant="flat" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-bold text-sm shrink-0">
-                {number}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-neutral-800">{title}</p>
-                <p className="text-xs text-neutral-500">{desc}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Story Section */}
-        <h2 className="text-sm font-bold text-neutral-800 mb-3">Cerita Investor</h2>
-        <Card variant="gold" className="mb-4">
-          <p className="text-sm italic text-neutral-800 leading-relaxed">
-            "Sebelum PROPIN, saya tidak pernah bisa berinvestasi di properti karena modal yang dibutuhkan sangat besar. Sekarang, dengan Rp 250 ribu, saya sudah bisa memiliki bagian dari apartemen di BSD."
-          </p>
-          <div className="flex items-center gap-2 mt-3">
-            <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-gold-800 font-bold text-xs">
-              RA
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-neutral-800">Rina Aminah</p>
-              <p className="text-[10px] text-neutral-600">Investor sejak 2026</p>
+        <div className="lg:grid lg:grid-cols-2 lg:gap-6">
+          {/* SDG Alignment */}
+          <div className="mb-6 lg:mb-0">
+            <h2 className="text-sm font-bold text-neutral-800 mb-3">Kontribusi SDG</h2>
+            <div className="space-y-2">
+              {SDG_ITEMS.map(({ number, title, desc }) => (
+                <Card key={number} variant="flat" className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-bold text-sm shrink-0">
+                    {number}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-neutral-800">{title}</p>
+                    <p className="text-xs text-neutral-500">{desc}</p>
+                  </div>
+                </Card>
+              ))}
             </div>
           </div>
-        </Card>
+
+          {/* Story Section */}
+          <div>
+            <h2 className="text-sm font-bold text-neutral-800 mb-3">Cerita Investor</h2>
+            <Card variant="gold">
+              <p className="text-sm italic text-white-400 leading-relaxed">
+                "Sebelum PROPIN, saya tidak pernah bisa berinvestasi di properti karena modal yang dibutuhkan sangat besar. Sekarang, dengan Rp 250 ribu, saya sudah bisa memiliki bagian dari apartemen di BSD."
+              </p>
+              <div className="flex items-center gap-2 mt-3">
+                <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-gold-800 font-bold text-xs">
+                  RA
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-white">Rina Aminah</p>
+                  <p className="text-[10px] text-white-500">Investor sejak 2026</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   )

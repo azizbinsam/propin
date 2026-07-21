@@ -22,7 +22,7 @@ export function ProtectedRoute({ children, requireAdmin = false }) {
   }
 
   // Admin route accessed by non-admin → redirect to user dashboard + toast will be shown
-  if (requireAdmin && !user?.role === 'admin') {
+  if (requireAdmin && user?.role !== 'admin') {
     return <Navigate to="/dashboard" replace />
   }
 

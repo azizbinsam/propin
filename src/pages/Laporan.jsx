@@ -48,14 +48,17 @@ export default function Laporan() {
         <h1 className="font-bold text-neutral-800">Laporan</h1>
       </header>
 
-      <div className="p-4 lg:p-0 max-w-2xl">
+      <div className="p-4 lg:p-0">
         <h1 className="hidden lg:block text-xl font-bold text-neutral-800 mb-6">Laporan</h1>
 
-        {/* Period Selector */}
-        <Card variant="default" className="mb-5">
-          <div className="flex items-center gap-3">
-            <Calendar size={18} className="text-neutral-400" />
-            <div className="flex gap-2 flex-1">
+        {/* Period Selector + Summary — side by side on desktop */}
+        <div className="grid gap-3 lg:grid-cols-3 mb-5">
+          <Card variant="default" className="lg:col-span-1 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-2 text-neutral-500">
+              <Calendar size={16} />
+              <p className="text-xs font-medium">Pilih Periode</p>
+            </div>
+            <div className="flex gap-2">
               <select
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
@@ -74,31 +77,31 @@ export default function Laporan() {
                 <option value="2025">2025</option>
               </select>
             </div>
-          </div>
-        </Card>
+          </Card>
 
-        {/* Summary Card */}
-        <Card variant="gold" className="mb-5">
-          <p className="text-xs opacity-90">Total Portfolio ({months[selectedMonth - 1]} {selectedYear})</p>
-          <p className="text-2xl font-bold mt-1">{formatRupiah(portfolio.totalValue)}</p>
-          <div className="flex items-center gap-4 mt-3 text-xs">
-            <div>
-              <p className="opacity-75">Return</p>
-              <p className="font-semibold">+{formatRupiah(portfolio.totalReturn)}</p>
+          <Card variant="gold" className="lg:col-span-2">
+            <p className="text-xs opacity-90">Total Portfolio ({months[selectedMonth - 1]} {selectedYear})</p>
+            <p className="text-2xl font-bold mt-1">{formatRupiah(portfolio.totalValue)}</p>
+            <div className="flex items-center gap-6 mt-3 text-xs">
+              <div>
+                <p className="opacity-75">Return</p>
+                <p className="font-semibold">+{formatRupiah(portfolio.totalReturn)}</p>
+              </div>
+              <div>
+                <p className="opacity-75">Yield</p>
+                <p className="font-semibold">{formatPercent(portfolio.averageReturnPercent)}</p>
+              </div>
+              <div>
+                <p className="opacity-75">Properti</p>
+                <p className="font-semibold">{portfolio.totalProperties}</p>
+              </div>
             </div>
-            <div>
-              <p className="opacity-75">Yield</p>
-              <p className="font-semibold">{formatPercent(portfolio.averageReturnPercent)}</p>
-            </div>
-            <div>
-              <p className="opacity-75">Properti</p>
-              <p className="font-semibold">{portfolio.totalProperties}</p>
-            </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
 
         {/* Report Types */}
-        <div className="space-y-2">
+        <p className="text-sm font-semibold text-neutral-700 mb-3">Jenis Laporan</p>
+        <div className="grid gap-3 lg:grid-cols-2">
           {REPORT_TYPES.map((type) => (
             <Card
               key={type.id}

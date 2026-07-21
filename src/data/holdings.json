@@ -1,5 +1,5 @@
 [
-  { "propertyId": "apartemen-bsd", "propertyName": "Apartemen BSD", "tokens": 1800, "totalPropertyTokens": 1000000 },
-  { "propertyId": "vila-tanjung-lesung", "propertyName": "Vila Tanjung Lesung", "tokens": 900, "totalPropertyTokens": 160000 },
-  { "propertyId": "hotel-jogja-syariah", "propertyName": "Hotel Jogja Syariah", "tokens": 1200, "totalPropertyTokens": 500000 }
+  { "propertyId": "apartemen-bsd", "propertyName": "Apartemen BSD", "tokens": 1800, "totalPropertyTokens": 2500000 },
+  { "propertyId": "vila-tanjung", "propertyName": "Vila Tanjung Lesung", "tokens": 900, "totalPropertyTokens": 4500000 },
+  { "propertyId": "hotel-jogja", "propertyName": "Hotel Jogja Syariah", "tokens": 1200, "totalPropertyTokens": 3500000 }
 ]

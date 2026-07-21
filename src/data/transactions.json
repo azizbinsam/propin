@@ -12,7 +12,7 @@
 
   {
     "id": "tx-initial-002",
-    "propertyId": "ila-tanjung-lesung",
+    "propertyId": "vila-tanjung",
     "propertyName": "Vila Tanjung Lesung",
     "tokenAmount": 900,
     "nominal": 500000,
@@ -23,7 +23,7 @@
 
   {
     "id": "tx-initial-003",
-    "propertyId": "hotel-jogja-syariah",
+    "propertyId": "hotel-jogja",
     "propertyName": "Hotel Jogja Syariah",
     "tokenAmount": 1200,
     "nominal": 500000,

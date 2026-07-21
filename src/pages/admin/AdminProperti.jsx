@@ -18,8 +18,8 @@ const EMPTY_PROPERTY = {
   category: 'apartemen',
   totalAsset: 0,
   totalTokens: 1000000,
-  pricePerToken: 25000,
-  minInvestment: 250000,
+  pricePerToken: 10000,
+  minInvestment: 10000,
   projectedReturnPercent: 10,
   fundingPercent: 0,
 }

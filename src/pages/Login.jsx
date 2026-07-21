@@ -81,7 +81,7 @@ export default function Login() {
       {/* Form panel */}
       <div className="w-full max-w-xl mx-auto lg:mx-0 lg:w-3/5 lg:px-16">
         <div className='mb-8 flex justify-center'>
-        <Logo size={180} />
+          <a href="/"><Logo size={180} /></a>
         </div>
 
         <div className="bg-neutral-0 rounded-2xl border border-neutral-200 shadow-sm p-6 lg:p-8">

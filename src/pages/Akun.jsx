@@ -92,131 +92,138 @@ export default function Akun() {
         <h1 className="font-bold text-neutral-800">Pengaturan</h1>
       </header>
 
-      <div className="p-4 lg:p-0 max-w-2xl">
+      <div className="p-4 lg:p-0">
         <h1 className="hidden lg:block text-xl font-bold text-neutral-800 mb-6">Pengaturan</h1>
 
-        {/* Profile Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <button
-            onClick={handlePhotoClick}
-            className="relative w-20 h-20 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 text-2xl font-bold overflow-hidden group"
-          >
-            {user?.avatar ? (
-              <img src={user.avatar} alt="" className="w-full h-full object-cover" />
-            ) : (
-              (user?.name || 'U').charAt(0).toUpperCase()
-            )}
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <Camera size={20} className="text-white" />
-            </div>
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden"
-          />
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
+          {/* Kolom kiri: profil & form */}
           <div>
-            <p className="text-lg font-bold text-neutral-800">{user?.name || 'User'}</p>
-            <p className="text-sm text-neutral-500">{user?.email || ''}</p>
-            <Badge variant="success" className="mt-1 text-[10px]">
-              {user?.kycStatus || 'Terverifikasi'}
-            </Badge>
-          </div>
-        </div>
-
-        {/* Form */}
-        <Card variant="default" className="mb-6">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Nama Lengkap</label>
+            {/* Profile Header */}
+            <div className="flex items-center gap-4 mb-6">
+              <button
+                onClick={handlePhotoClick}
+                className="relative w-20 h-20 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 text-2xl font-bold overflow-hidden group"
+              >
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  (user?.name || 'U').charAt(0).toUpperCase()
+                )}
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Camera size={20} className="text-white" />
+                </div>
+              </button>
               <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full h-11 px-3 rounded-xl border border-neutral-200 text-sm outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100"
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
               />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-11 px-3 rounded-xl border border-neutral-200 text-sm outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-1.5">Nomor Telepon</label>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+62 "
-                className="w-full h-11 px-3 rounded-xl border border-neutral-200 text-sm outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100"
-              />
-            </div>
-          </div>
-          <Button
-            variant="primary"
-            className="w-full mt-4"
-            disabled={!hasChanges || saving}
-            onClick={handleSave}
-          >
-            {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
-          </Button>
-        </Card>
-
-        {/* Menu Sections */}
-        {MENU_SECTIONS.map((section) => (
-          <div key={section.title} className="mb-6">
-            <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-2 px-1">
-              {section.title}
-            </p>
-            <Card variant="flat" padding="sm">
-              <div className="divide-y divide-neutral-100">
-                {section.items.map((item) => (
-                  <div
-                    key={item.label}
-                    className="flex items-center gap-3 px-3 py-3 cursor-pointer hover:bg-neutral-50 transition-colors"
-                    onClick={
-                      item.action === 'upload'
-                        ? handlePhotoClick
-                        : item.to && item.to !== '#'
-                        ? () => navigate(item.to)
-                        : undefined
-                    }
-                  >
-                    <item.icon size={18} className="text-neutral-500" />
-                    <span className="flex-1 text-sm text-neutral-700">{item.label}</span>
-                    {item.toggle ? (
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setDarkMode(!darkMode) }}
-                        className={`w-11 h-6 rounded-full transition-colors ${darkMode ? 'bg-gold-600' : 'bg-neutral-300'}`}
-                      >
-                        <div className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${darkMode ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                      </button>
-                    ) : item.value ? (
-                      <span className="text-xs text-neutral-500">{item.value}</span>
-                    ) : (
-                      <ChevronRight size={16} className="text-neutral-400" />
-                    )}
-                  </div>
-                ))}
+              <div>
+                <p className="text-lg font-bold text-neutral-800">{user?.name || 'User'}</p>
+                <p className="text-sm text-neutral-500">{user?.email || ''}</p>
+                <Badge variant="success" className="mt-1 text-[10px]">
+                  {user?.kycStatus || 'Terverifikasi'}
+                </Badge>
               </div>
+            </div>
+
+            {/* Form */}
+            <Card variant="default">
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-neutral-600 mb-1.5">Nama Lengkap</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full h-11 px-3 rounded-xl border border-neutral-200 text-sm outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-neutral-600 mb-1.5">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full h-11 px-3 rounded-xl border border-neutral-200 text-sm outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-neutral-600 mb-1.5">Nomor Telepon</label>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+62 "
+                    className="w-full h-11 px-3 rounded-xl border border-neutral-200 text-sm outline-none focus:border-gold-600 focus:ring-2 focus:ring-gold-100"
+                  />
+                </div>
+              </div>
+              <Button
+                variant="primary"
+                className="w-full mt-4"
+                disabled={!hasChanges || saving}
+                onClick={handleSave}
+              >
+                {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
+              </Button>
             </Card>
           </div>
-        ))}
 
-        {/* Logout */}
-        <Button
-          variant="outline"
-          className="w-full text-red-600 border-red-200 hover:bg-red-50"
-          onClick={handleLogout}
-        >
-          <LogOut size={16} className="mr-2" /> Keluar Akun
-        </Button>
+          {/* Kolom kanan: menu & logout */}
+          <div className="mt-6 lg:mt-0">
+            {MENU_SECTIONS.map((section) => (
+              <div key={section.title} className="mb-6">
+                <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-2 px-1">
+                  {section.title}
+                </p>
+                <Card variant="flat" padding="sm">
+                  <div className="divide-y divide-neutral-100">
+                    {section.items.map((item) => (
+                      <div
+                        key={item.label}
+                        className="flex items-center gap-3 px-3 py-3 cursor-pointer hover:bg-neutral-50 transition-colors"
+                        onClick={
+                          item.action === 'upload'
+                            ? handlePhotoClick
+                            : item.to && item.to !== '#'
+                            ? () => navigate(item.to)
+                            : undefined
+                        }
+                      >
+                        <item.icon size={18} className="text-neutral-500" />
+                        <span className="flex-1 text-sm text-neutral-700">{item.label}</span>
+                        {item.toggle ? (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setDarkMode(!darkMode) }}
+                            className={`w-11 h-6 rounded-full transition-colors ${darkMode ? 'bg-gold-600' : 'bg-neutral-300'}`}
+                          >
+                            <div className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${darkMode ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                          </button>
+                        ) : item.value ? (
+                          <span className="text-xs text-neutral-500">{item.value}</span>
+                        ) : (
+                          <ChevronRight size={16} className="text-neutral-400" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+            ))}
+
+            {/* Logout */}
+            <Button
+              variant="outline"
+              className="w-full text-red-600 border-red-200 hover:bg-red-50"
+              onClick={handleLogout}
+            >
+              <LogOut size={16} className="mr-2" /> Keluar Akun
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )
